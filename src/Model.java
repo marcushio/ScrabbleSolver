@@ -4,5 +4,5 @@
  * brief class description
  */
 public class Model {
-
+    Board board;
 }
