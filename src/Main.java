@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
@@ -29,7 +30,7 @@ public class Main {
     private HashSet<String> fillDictionary() {
         HashSet<String> dictionary = new HashSet<String>();
         String dataLine = null;
-        try (BufferedReader fileReader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader fileReader = new BufferedReader(new FileReader("res" + File.separator +  "animals.txt"))) {
             while ((dataLine = fileReader.readLine()) != null) {
                 dictionary.add(dataLine);
             }
