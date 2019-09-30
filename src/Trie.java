@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Trie {
     private Node root;
+    private int wordCount;
 
     public Trie(){
         root = new Node(null);
@@ -48,6 +49,7 @@ public class Trie {
             }
         }
         currentNode.children.put(null, null);
+        wordCount++;
     }
 
     public static void main(String[] args){
