@@ -35,7 +35,7 @@ public class Trie {
         }
     }
 
-    private void addWord(String word){
+    public void addWord(String word){
         Node currentNode = root;
         for(int i=0; i < word.length(); i++){ //I'm probs going to change this loop structure
             String currentLetter = word.substring(i,i+1);

@@ -23,17 +23,18 @@ public class Solver {
 
     }
 
-    private HashSet<String> fillDictionary(String filename) {
-        HashSet<String> dictionary = new HashSet<String>();
-        String dataLine = null;
+    private void readDictionary(String filename) {
+        dict = new HashSet<String>();
+        trie = new Trie();
+        String word = null;
         try (BufferedReader fileReader = new BufferedReader(new FileReader("res" + File.separator +  filename))) {
-            while ((dataLine = fileReader.readLine()) != null) {
-                dictionary.add(dataLine);
+            while ((word = fileReader.readLine()) != null) {
+                dict.add(word);
+                trie.addWord(word);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return dictionary;
     }
 
     private void readBoard(){
@@ -67,7 +68,8 @@ public class Solver {
 
     public static void main(String[] args){
         Solver solver = new Solver();
-        HashSet<String> dict = solver.fillDictionary(args[0]);
-        solver.readBoard();
+        solver.readDictionary(args[0]);
+        System.out.println("dictionary file has been read.");
+        //solver.readBoard();
     }
 }
