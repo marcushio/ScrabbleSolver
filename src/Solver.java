@@ -14,9 +14,11 @@ import java.util.Scanner;
  */
 public class Solver {
     private String filename;
+    private Trie trie;
     private BoardSpace[][] board;
+    //private Board board;
     private List<Character> tray = new ArrayList<Character>();
-
+    private HashSet<String> dict;
     public void solve(){
 
     }
@@ -65,7 +67,7 @@ public class Solver {
 
     public static void main(String[] args){
         Solver solver = new Solver();
-        solver.fillDictionary(args[0]);
+        HashSet<String> dict = solver.fillDictionary(args[0]);
         solver.readBoard();
     }
 }
