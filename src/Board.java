@@ -11,6 +11,7 @@ public class Board extends Observable {
     int size;
     BoardSpace[][] board;
     List<String> playableLetters;
+    List<Tile> tilePool;
 
     public Board(int size){
         this.size = size;

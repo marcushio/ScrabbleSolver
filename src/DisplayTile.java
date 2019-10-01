@@ -4,7 +4,8 @@ import javafx.scene.paint.Color;
 
 /**
  * @author: Marcus Trujillo
- * @version: brief class description
+ * @version: 9/26/2019
+ * brief class description
  */
 class DisplayTile extends Canvas {
     int rowIndex, colIndex;

@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * @author: Marcus Trujillo
  * @version: 9/20/2019
@@ -5,4 +7,7 @@
  */
 public class Model {
     Board board;
+    Player player;
+    List<Tile> tilePool;
+
 }
