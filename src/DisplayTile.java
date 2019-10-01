@@ -32,6 +32,7 @@ class DisplayTile extends Canvas {
             }
 
         } else {
+            gc.strokeRect(0,0,Constants.TILE_WIDTH,Constants.TILE_HEIGHT);
             gc.strokeText(space.getLetter(), 20, 20);
         }
     }
