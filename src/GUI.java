@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
 
 /**
  * @author: Marcus Trujillo
@@ -52,6 +53,7 @@ public class GUI implements Observer {
         for(int i = 0; i < size; i++){
             for(int j= 0; j < size; j++) {
                 DisplayTile tempCanvas = new DisplayTile(board.getSpaceAt(i,j));
+
                 tempCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new TileHandler() );
                 grid.getChildren().add(tempCanvas);
             }
@@ -64,6 +66,35 @@ public class GUI implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
+
+    }
+
+    public static void main(String[] args){
+        BoardSpace boardSpaces[][] = null;
+        int boardSize = 0;
+        //read a board config
+        try(Scanner scanner = new Scanner(System.in)){
+            String token = null;
+            System.out.println("Enter your board configuration");
+            boardSize  = Integer.parseInt(scanner.nextLine());
+            boardSpaces = new BoardSpace[boardSize][boardSize];
+
+            for(int i = 0; i < boardSize; i++){
+                for(int j = 0; j < boardSize; j++){
+                    token = scanner.next();
+                    boardSpaces[i][j] = new BoardSpace(token);
+                }
+            }
+
+            String tray = scanner.next();
+            System.out.println("Tray: " + tray);
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        //make a new board based on config
+        Board  board = new Board(boardSize, boardSpaces );
+        //paint gui based on this
 
     }
 }

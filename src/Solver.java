@@ -20,9 +20,6 @@ public class Solver {
     private List<Character> tray = new ArrayList<Character>();
     private HashSet<String> dict;
 
-    public void solve(){
-
-    }
 
     private void readDictionary(String filename) {
         dict = new HashSet<String>();
@@ -40,31 +37,38 @@ public class Solver {
 
     private void readBoard(){
         try(Scanner scanner = new Scanner(System.in)){
-            String line = null;
+            String token = null;
             System.out.println("Enter your board configuration");
             int boardSize = Integer.parseInt(scanner.nextLine());
             board = new BoardSpace[boardSize][boardSize];
 
             for(int i = 0; i < boardSize; i++){
                 for(int j = 0; j < boardSize; j++){
-                    line = scanner.next();
-                    board[i][j] = new BoardSpace(line);
+                    token = scanner.next();
+                    board[i][j] = new BoardSpace(token);
                 }
             }
 
             String tray = scanner.next();
-            System.out.println("Tray: " + tray);
+            //printBoard(boardSize);
+            //System.out.println("Tray: " + tray);
 
-            /* this was just to show everything is getting entered.
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void solve(){
+
+    }
+
+    private void printBoard(int boardSize){
             for(int i = 0; i < boardSize; i++){
                 for(int j = 0; j < boardSize; j++){
                     System.out.println(board[i][j]);
                 }
             }
-             */
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
+
     }
 
     public static void main(String[] args){

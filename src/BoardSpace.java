@@ -4,7 +4,7 @@
  * This represents each individual space on the board. They store if they have multipliers and if they're empty
  *
  */
-enum MultiplierType{LETTER, WORD;}
+enum MultiplierType{LETTER, WORD, NONE;}
 
 public class BoardSpace {
     private String letter;
@@ -18,17 +18,19 @@ public class BoardSpace {
      *                  word, ".3" would be a triple letter. We expect good input with an integer repping the multiplier
      */
     public BoardSpace(String textSpace){
+        multiplyBy = 1;
         if(textSpace.length() < 2) {
             letter = textSpace;
-            multiplyBy = 1;
         } else if (textSpace.length() == 2) {
             if (textSpace.charAt(0) != '.') {
                 multiplyBy = Integer.parseInt(textSpace.substring(0, 1));
                 multiplierType = MultiplierType.WORD;
             }
-            if (textSpace.charAt(1) != '.') {
+            else if (textSpace.charAt(1) != '.') {
                 multiplyBy = Integer.parseInt(textSpace.substring(1));
                 multiplierType = MultiplierType.LETTER;
+            } else {
+                multiplierType = MultiplierType.NONE;
             }
         }
     }

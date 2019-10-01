@@ -1,8 +1,12 @@
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Scanner;
 
 /**
  * @author: Marcus Trujillo
@@ -10,18 +14,50 @@ import java.util.HashSet;
  * This class sets up all the components and launches the program.
  *
  */
-public class Main {
+public class Main extends Application {
+    Stage primaryStage;
+    GUI gui;
+    Controller controller;
+    Board board;
 
+    /**
+     * Launches the program
+     * @param args
+     */
+    public static void main(String[] args) { launch(args); }
 
-    public static void main(String[] args){
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        this.primaryStage = primaryStage;
+        board = readBoard(); //read board config and make new board for test
+        controller = new Controller(fillDictionary("sowpods.txt"));
+        gui = new GUI(primaryStage, board, controller);
+    }
 
-        //String filename = "sowpods.txt";
-        //3 tasks that need to be done
-        //1 read in dictionary
-        //2 read in board
-        //3
-        Main main = new Main();
-        Controller controller = new Controller(main.fillDictionary(args[0]));
+    private Board readBoard(){
+        BoardSpace[][] board = null;
+        Board newBoard = null;
+        try(Scanner scanner = new Scanner(System.in)){
+            String token = null;
+            System.out.println("Enter your board configuration");
+            int boardSize = Integer.parseInt(scanner.nextLine());
+            board = new BoardSpace[boardSize][boardSize];
+
+            for(int i = 0; i < boardSize; i++){
+                for(int j = 0; j < boardSize; j++){
+                    token = scanner.next();
+                    board[i][j] = new BoardSpace(token);
+                }
+            }
+            newBoard = new Board(boardSize, board);
+            String tray = scanner.next();
+            //printBoard(boardSize);
+            //System.out.println("Tray: " + tray);
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return newBoard;
     }
 
     /**
@@ -39,6 +75,7 @@ public class Main {
         }
         return dictionary;
     }
+
 
 
 }

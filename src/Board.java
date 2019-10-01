@@ -1,23 +1,42 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * @author: Marcus Trujillo
  * @version:
  * represents the board we're playing off of.
  */
-public class Board {
+public class Board extends Observable {
     int size;
     BoardSpace[][] board;
     List<String> playableLetters;
 
-    public int getSize() {
-        return size;
+    public Board(int size){
+        this.size = size;
+        board = new BoardSpace[size][size];
     }
 
-    public List<String> getPlayableLetters() {
-        return playableLetters;
+    public Board(int size, BoardSpace[][] board){
+        this.size = size;
+        this.board = board;
+        //read through board to populate playables
     }
+
+
+    //Getters and Setters live below this line
+
+    /**
+     *
+     * @return
+     */
+    public int getSize() { return size; }
+
+    /**
+     *
+     * @return
+     */
+    public List<String> getPlayableLetters() { return playableLetters; }
 
     /**
      *

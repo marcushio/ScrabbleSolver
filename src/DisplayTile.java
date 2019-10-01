@@ -11,6 +11,7 @@ class DisplayTile extends Canvas {
     String letter;
 
     public DisplayTile(BoardSpace space) {
+        setWidth(Constants.TILE_WIDTH); setHeight(Constants.TILE_HEIGHT);
         if(space.isEmpty()) this.letter = null;
         else this.letter = space.getLetter();
         this.rowIndex = space.getRowIndex();
@@ -19,9 +20,10 @@ class DisplayTile extends Canvas {
         GraphicsContext gc = this.getGraphicsContext2D();
         if(space.isEmpty()){
             gc.setStroke(Color.BLACK);
-            gc.strokeRect(0,0,40,40);
+            gc.strokeRect(0,0,Constants.TILE_WIDTH, Constants.TILE_HEIGHT);
             if(space.getMultiplierType().equals(MultiplierType.LETTER)){
-                gc.strokeText(Constants.lETTER, 20, 3);
+                gc.strokeRect(0,0,Constants.TILE_WIDTH,Constants.TILE_HEIGHT);
+                gc.strokeText(Constants.LETTER, 20, 3);
                 gc.strokeText(Integer.toString(space.getMultiplyBy()), 10, 20);
             }
             else if (space.getMultiplierType().equals(MultiplierType.WORD)){

@@ -9,7 +9,9 @@ public class Constants {
     public static final String tripleWord = "Triple\nLetter\nScore";
     public static final String tripleScore = "Triple\n";
     public static final String doubleScore = "Double\n";
-    public static final String lETTER = "Letter\n";
+    public static final String LETTER = "Letter\n";
     public static final String WORD = "Word\n";
+    public static final int TILE_WIDTH = 40;
+    public static final int TILE_HEIGHT = 40;
 
 }
