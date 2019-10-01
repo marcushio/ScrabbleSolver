@@ -14,5 +14,5 @@ public class Constants {
     public static final int TILE_WIDTH = 40;
     public static final int TILE_HEIGHT = 40;
     public static final String TILE_CONFIG_FILE = "scrabble_tiles.txt";
-
+    public static final int STANDARD_BOARD_SIZE = 15;
 }

@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,10 +11,16 @@ import java.util.List;
  * brief class description
  */
 public class Model {
-    Board board;
-    Player player;
-    List<Tile> tilePool;
+    private Board board;
+    private Player player;
+    public List<Tile> tilePool;
 
+    public Model(){
+        board = new Board(Constants.STANDARD_BOARD_SIZE);
+        player = new Player();
+        tilePool = new ArrayList<Tile>();
+        fillTilePool();
+    }
     /**
      * fills the collection of tiles that can be drawn by reading from a file that contains all inforamation about
      * the number of each tiles, and the point specifications of each.
@@ -27,7 +34,7 @@ public class Model {
                 String letter = arr[0];
                 int pointValue = Integer.parseInt(arr[1]);
                 int frequency = Integer.parseInt(arr[2]);
-                for(int i= 0; i <= frequency; i++) {
+                for(int i= 1; i <= frequency; i++) {
                     tilePool.add( new Tile(letter, pointValue) );
                 }
             }
@@ -37,6 +44,9 @@ public class Model {
     }
 
     public static void main(String[] args){
-        Model model = new Model(); 
+        Model model = new Model();
+        for(Tile tile: model.tilePool){
+            System.out.println(tile.getLetter());
+        }
     }
 }
