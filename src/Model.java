@@ -10,4 +10,7 @@ public class Model {
     Player player;
     List<Tile> tilePool;
 
+    private void readTilePool(){
+
+    }
 }
