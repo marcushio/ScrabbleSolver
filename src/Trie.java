@@ -38,7 +38,7 @@ public class Trie {
 
     public void addWord(String word){
         Node currentNode = root;
-        for(int i=0; i < word.length(); i++){ //I'm probs going to change this loop structure
+        for(int i=0; i < word.length(); i++){
             String currentLetter = word.substring(i,i+1);
             if( !currentNode.children.containsKey( currentLetter )){ //check if this letter is a child of current node
                 Node newNode = new Node(currentLetter);

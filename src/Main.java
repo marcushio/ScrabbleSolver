@@ -11,7 +11,7 @@ import java.util.HashSet;
  *
  */
 public class Main {
-    public static String filename = "animals.txt";
+
 
     public static void main(String[] args){
 
@@ -21,18 +21,18 @@ public class Main {
         //2 read in board
         //3
         Main main = new Main();
-        Controller controller = new Controller(main.fillDictionary());
+        Controller controller = new Controller(main.fillDictionary(args[0]));
     }
 
     /**
      * fills a hash set with valid words
      */
-    private HashSet<String> fillDictionary() {
+    private HashSet<String> fillDictionary(String filename) {
         HashSet<String> dictionary = new HashSet<String>();
-        String dataLine = null;
-        try (BufferedReader fileReader = new BufferedReader(new FileReader("res" + File.separator +  "animals.txt"))) {
-            while ((dataLine = fileReader.readLine()) != null) {
-                dictionary.add(dataLine);
+        String word = null;
+        try (BufferedReader fileReader = new BufferedReader(new FileReader("res" + File.separator +  filename))) {
+            while ((word = fileReader.readLine()) != null) {
+                dictionary.add(word);
             }
         } catch (IOException ex) {
             ex.printStackTrace();

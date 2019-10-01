@@ -19,6 +19,7 @@ public class Solver {
     //private Board board;
     private List<Character> tray = new ArrayList<Character>();
     private HashSet<String> dict;
+
     public void solve(){
 
     }
