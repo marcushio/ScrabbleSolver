@@ -1,3 +1,6 @@
+import javafx.event.Event;
+import javafx.event.EventHandler;
+
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -11,6 +14,13 @@ public class Controller {
 
     public Controller(HashSet dictionary){
         this.dictionary = dictionary;
+    }
+
+    public class TileHandler implements EventHandler {
+        @Override
+        public void handle(Event event){
+
+        }
     }
 
 }

@@ -7,9 +7,10 @@
 enum MultiplierType{LETTER, WORD;}
 
 public class BoardSpace {
-    String letter;
-    int multiplyBy;
-    MultiplierType multiplier;
+    private String letter;
+    private int multiplyBy;
+    private MultiplierType multiplierType;
+    private int rowIndex, colIndex;
 
     /**
      * We construct the space based off the String read in from standard input.
@@ -19,14 +20,15 @@ public class BoardSpace {
     public BoardSpace(String textSpace){
         if(textSpace.length() < 2) {
             letter = textSpace;
+            multiplyBy = 1;
         } else if (textSpace.length() == 2) {
             if (textSpace.charAt(0) != '.') {
                 multiplyBy = Integer.parseInt(textSpace.substring(0, 1));
-                multiplier = MultiplierType.WORD;
+                multiplierType = MultiplierType.WORD;
             }
             if (textSpace.charAt(1) != '.') {
                 multiplyBy = Integer.parseInt(textSpace.substring(1));
-                multiplier = MultiplierType.LETTER;
+                multiplierType = MultiplierType.LETTER;
             }
         }
     }
@@ -35,8 +37,18 @@ public class BoardSpace {
      * Check's if the space has been used by a letter
      * @return true if the space is not occupied by a letter, else false
      */
-    private boolean isEmpty(){
+    public boolean isEmpty(){
         if ( letter == null ) return true;
         return false;
     }
+
+    public String getLetter(){ return letter; }
+
+    public int getMultiplyBy() { return multiplyBy; }
+
+    public MultiplierType getMultiplierType(){ return multiplierType; }
+
+    public int getRowIndex() { return rowIndex; }
+
+    public int getColIndex() { return colIndex; }
 }

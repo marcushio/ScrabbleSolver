@@ -22,7 +22,7 @@ public class GUI implements Observer {
     private HBox playerTray;
     private VBox root;
 
-    public GUI(Stage primaryStage, Board model ){
+    public GUI(Stage primaryStage, Board model, Controller controller ){
         root = new VBox();
 
         computerTray = new Canvas(200, 40);
@@ -30,8 +30,8 @@ public class GUI implements Observer {
         gc.setStroke(Color.BLACK);
         gc.strokeRect(0,0,200,40);
 
-        playArea = new TilePane();
-        fi
+        //playArea = new TilePane();
+        playArea = paintNewGrid(model.getSize(), model, controller);
         playerTray = new HBox();
         root.getChildren().addAll(computerTray, playArea, playerTray);
         primaryStage.setTitle("SCRA-SCRA-SCRABBLE");
@@ -42,19 +42,19 @@ public class GUI implements Observer {
     /**
      *
      */
-    public TilePane fillGrid(int rows, int columns, Board board){
+    public TilePane paintNewGrid(int size, Board board, Controller controller){
         TilePane grid = new TilePane();
-        grid.setPrefColumns(columns);
-        grid.setPrefRows(rows);
+        grid.setPrefColumns(size);
+        grid.setPrefRows(size);
         grid.setHgap(2);
         grid.setVgap(2);
-        int tiles = rows*columns;
 
-        for(int i = 0; i < tiles; i++){
-            DisplayTile tempCanvas = paintTile(board.getTile(i));
-            tempCanvas.setIndex(i);
-            tempCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED,        );
-            grid.getChildren().add(tempCanvas);
+        for(int i = 0; i < size; i++){
+            for(int j= 0; j < size; j++) {
+                DisplayTile tempCanvas = new DisplayTile(board.getSpaceAt(i,j));
+                tempCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new TileHandler() );
+                grid.getChildren().add(tempCanvas);
+            }
         }
         return grid;
     }
