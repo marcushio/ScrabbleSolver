@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author: Marcus Trujillo
  * @version: 9/20/2019
- * brief class description
+ * The model is the representation of the internal data. The relevant data
  */
 public class Model {
     private Board board;
