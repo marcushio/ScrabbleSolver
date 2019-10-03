@@ -23,14 +23,14 @@ public class Trie {
      * Each node has a hashmap of it's children
      * Each node has a letter. If a node is a root or the end of a word, then it's letter value is null
      */
-    private class Node{
+     public class Node{
         public HashMap<String, Node> children = new HashMap<String, Node>(); //each "string" is a single letter of the word
         public String letter;
 
         public Node(String letter){
             this.letter = letter;
         }
-        private boolean isCompleteWord(){
+        public boolean isCompleteWord(){
             if(children.containsValue(null)) return true;
             return false;
         }

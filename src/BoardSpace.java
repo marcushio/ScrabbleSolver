@@ -7,7 +7,8 @@
 enum MultiplierType{LETTER, WORD, NONE;}
 
 public class BoardSpace {
-    private String letter;
+    private Constants info;
+    private Tile tile;
     private int multiplyBy;
     private MultiplierType multiplierType;
     private int rowIndex, colIndex;
@@ -18,9 +19,10 @@ public class BoardSpace {
      *                  word, ".3" would be a triple letter. We expect good input with an integer repping the multiplier
      */
     public BoardSpace(String textSpace){
+        info = new Constants();
         multiplyBy = 1;
         if(textSpace.length() < 2) {
-            letter = textSpace;
+            tile = new Tile(textSpace, info.getLetterPoints(textSpace));
         } else if (textSpace.length() == 2) {
             if (textSpace.charAt(0) != '.') {
                 multiplyBy = Integer.parseInt(textSpace.substring(0, 1));
@@ -40,11 +42,11 @@ public class BoardSpace {
      * @return true if the space is not occupied by a letter, else false
      */
     public boolean isEmpty(){
-        if ( letter == null ) return true;
+        if ( tile == null ) return true;
         return false;
     }
 
-    public String getLetter(){ return letter; }
+    public Tile getTile(){ return tile; }
 
     public int getMultiplyBy() { return multiplyBy; }
 
