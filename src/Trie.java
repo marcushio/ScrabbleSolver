@@ -8,10 +8,11 @@ import java.util.List;
 
 /**
  * @author: Marcus Trujillo
- * @version: brief class description
+ * @version:
+ * A retrieval tree that we're using to generate words for the solver to try.
  */
 public class Trie {
-    private Node root;
+    public Node root;
     private int wordCount;
 
     public Trie(){
@@ -30,8 +31,14 @@ public class Trie {
         public Node(String letter){
             this.letter = letter;
         }
+
         public boolean isCompleteWord(){
             if(children.containsValue(null)) return true;
+            return false;
+        }
+
+        public boolean hasChild(String letter){
+            if(children.containsKey(letter)) return true;
             return false;
         }
     }

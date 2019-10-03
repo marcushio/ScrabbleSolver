@@ -7,8 +7,8 @@
 enum MultiplierType{LETTER, WORD, NONE;}
 
 public class BoardSpace {
-    private Constants info;
-    private Tile tile;
+    private Constants info; //just an object that stores info about the game like tile scores etc.
+    private Tile tile; //null if no tile has been played on this space
     private int multiplyBy;
     private MultiplierType multiplierType;
     private int rowIndex, colIndex;

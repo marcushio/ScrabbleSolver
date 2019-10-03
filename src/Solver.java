@@ -16,12 +16,13 @@ public class Solver {
     private Trie trie;
     private BoardSpace[][] board;
     //private Board board;
-    //private List<Tile> tray = new ArrayList<Tile>();
-    private String tray;
+    private List<Tile> tray;
+    private String stringTray;
     private HashSet<String> dict;
 
     public Solver(String filename){
         readDictionary(filename);
+        tray = new ArrayList<Tile>();
     }
     public Solver(Trie trie){
         this.trie = trie;
@@ -54,7 +55,7 @@ public class Solver {
                     board[i][j] = new BoardSpace(token);
                 }
             }
-            tray = scanner.next();
+            stringTray = scanner.next();
             //printBoard(boardSize);
             //System.out.println("Tray: " + tray);
         }catch (Exception ex){
@@ -62,9 +63,16 @@ public class Solver {
         }
     }
 
-    public void solve(){
-        Trie.Node currentNode;
-        //first
+    /**
+     * return best move? or have it make the move?
+     */
+    public void solve( ){
+        Trie.Node currentNode = trie.root;
+        int currentTile = 0;
+        ArrayList<Tile> remainingTiles = new ArrayList<Tile>( tray );
+        ArrayList<Tile> tilesInWord = new ArrayList<Tile>();
+
+
     }
 
     //this is just for debugging go ahead and delete this later
