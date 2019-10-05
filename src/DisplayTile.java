@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 /**
  * @author: Marcus Trujillo
  * @version: 9/26/2019
- * brief class description
+ * This is the tile that gets displayed in the GUI.
  */
 class DisplayTile extends Canvas {
     int rowIndex, colIndex;
@@ -14,7 +14,7 @@ class DisplayTile extends Canvas {
     public DisplayTile(BoardSpace space) {
         setWidth(Constants.TILE_WIDTH); setHeight(Constants.TILE_HEIGHT);
         if(space.isEmpty()) this.letter = null;
-        else this.letter = space.getLetter();
+        else this.letter = space.getTile().getLetter();
         this.rowIndex = space.getRowIndex();
         this.colIndex = space.getColIndex();
 
@@ -34,7 +34,7 @@ class DisplayTile extends Canvas {
 
         } else {
             gc.strokeRect(0,0,Constants.TILE_WIDTH,Constants.TILE_HEIGHT);
-            gc.strokeText(space.getLetter(), 20, 20);
+            gc.strokeText(space.getTile().getLetter(), 20, 20);
         }
     }
 
