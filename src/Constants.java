@@ -14,6 +14,7 @@ import java.util.Map;
 public class Constants {
     public static final String TILE_CONFIG_FILE = "scrabble_tiles.txt";
     public static String dictionaryFilename;
+    public static int TRAY_SIZE = 7;
 
     public static final String doubleLetter = "Double\nLetter\nScore";
     public static final String tripleLetter = "Triple\nLetter\nScore";
@@ -25,8 +26,8 @@ public class Constants {
     public static final String WORD = "Word\n";
     public static final int TILE_WIDTH = 40;
     public static final int TILE_HEIGHT = 40;
-    public static final int STANDARD_BOARD_SIZE = 15;
-    public Map<String, Integer> prototypes = new HashMap<String, Integer>() ;
+    public static final int BOARD_DIMENSIONS = 15;
+    public Map<Tile, Integer> prototypes = new HashMap<Tile, Integer>() ; //tile prototypes maps a tile to it's frequency
 
     public Constants(){
         readTileInfo();
@@ -43,6 +44,7 @@ public class Constants {
      * reads tile information from the file.
      */
     private void readTileInfo(){
+        TilePool sock = new TilePool();
         String fileLine = "";
         try (BufferedReader fileReader = new BufferedReader(new FileReader("res"+ File.separator+Constants.TILE_CONFIG_FILE))) {
             while ((fileLine = fileReader.readLine()) != null) {
@@ -50,8 +52,12 @@ public class Constants {
                 String[] arr = fileLine.split(" ");
                 String letter = arr[0];
                 int pointValue = Integer.parseInt(arr[1]);
-                //int frequency = Integer.parseInt(arr[2]);
-                prototypes.put( letter, pointValue);
+                int frequency = Integer.parseInt(arr[2]);
+                Tile newTile = new Tile(letter, pointValue);
+                for(int i = 0; i <= frequency; i++){
+                    sock.addMultipleTiles(newTile, frequency);
+                }
+                prototypes.put( newTile, frequency);
             }
         } catch (IOException ex) {
             ex.printStackTrace();

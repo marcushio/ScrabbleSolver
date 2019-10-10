@@ -6,11 +6,21 @@ import java.util.Observable;
  * @author: Marcus Trujillo
  * @version:
  * represents the board we're playing off of.
+ * I think for the sake of ease later, it would make sense to have two playable lists. One for up, and one for down.
  */
 public class Board extends Observable {
     private int size;
     private BoardSpace[][] boardSpaces;
-    private List<Tile> playableLetters;
+    private Tile[][] board;
+    private List<Tile> downPlayableLetters;
+    private List<Tile> acrossPlayableLetters;
+    private static final Board instance;
+
+    static{ instance = new Board();}
+
+    public static Board getInstance(){
+        return instance;
+    }
 
     public Board(int size){
         this.size = size;
@@ -23,7 +33,10 @@ public class Board extends Observable {
         playableLetters = new ArrayList<Tile>();
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
-                if( ! board[i][j].isEmpty() ) playableLetters.add( board[i][j].getTile() ) ;
+                if( ! board[i][j].isEmpty() ) {
+                    playableLetters.add( board[i][j].getTile() ) ;
+                    //iterate through and see which are playable in which direction
+                }
             }
         }
     }
@@ -35,7 +48,6 @@ public class Board extends Observable {
                 System.out.println(boardSpaces[i][j]);
             }
         }
-
     }
 
 
@@ -61,4 +73,6 @@ public class Board extends Observable {
     public BoardSpace getSpaceAt(int row, int column){
         return boardSpaces[row][column];
     }
+
+    public Tile[][] getBoard(){ return board;}
 }

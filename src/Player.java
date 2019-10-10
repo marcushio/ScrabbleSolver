@@ -7,11 +7,27 @@ import java.util.List;
  * brief class description
  */
 public class Player {
-    List<Tile> tray = new ArrayList<Tile>();
+    private List<Tile> tray = new ArrayList<Tile>();
+    private int score = 0;
 
-    private void fillTray(){
+    private void removeTileFromTray(Tile tile){
+        tray.remove(tile);
+    }
+
+    public void fillTray(){
         while (tray.size() <= 7 ){
-
+            TilePool sock = TilePool.getInstance();
+            tray.add(sock.takeOutTile());
         }
     }
+
+    public void updateScore(int points){
+        score += points;
+    }
+
+    public void removeTrayTile(Tile tile ){
+        tray.remove(tile);
+    }
+
+
 }
