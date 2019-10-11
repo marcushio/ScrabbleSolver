@@ -35,7 +35,7 @@ public class Move {
         this.anchor = anchor;
     }
 
-    public boo
+    public boolean isAcross(){ return across; }
 
     void execute(Tile[][] boardArray){
         int row = startRow;
@@ -54,5 +54,7 @@ public class Move {
         //HumanMove.execute(player);
         player.fillTray();
     }
+
+    //maybe i oughta make a to string for readability?
 
 }

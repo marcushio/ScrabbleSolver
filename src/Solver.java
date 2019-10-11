@@ -94,8 +94,9 @@ public class Solver {
         ai.setBoard(solver.boardSpaces);
         ai.setTray(solver.tray);
         //if board loaded in isn't an empty board
-        ai.makeSubsequentMove();
+        Move move = ai.makeSubsequentMove();
+        System.out.println("move made");
         //else
-        //ai.makeFirstMove(); 
+        //ai.makeFirstMove();
     }
 }
