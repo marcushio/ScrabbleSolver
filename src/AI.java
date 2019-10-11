@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -36,7 +37,8 @@ public class AI{
         }
     }
 
-    boolean makeSubsequentMove(){
+    public Move makeSubsequentMove(){
+        Move move = null;
         maxScore = 0;
         bestWord = new ArrayList<Tile>();
         for (Anchor anchor : findAnchors()){
@@ -46,11 +48,11 @@ public class AI{
         }
         if (bestWord == null || bestWord.size() == 0){
             //should i have some kind of get new rack of tiles thing?
-            return false;
+            return move;
         } else {
             int startCol;
             int startRow;
-            if (currentAnchor.across){
+            if (currentAnchor.isAcross()){
                 startCol = currentAnchor.col - getAnchorPosition(currentAnchor, bestWord);
                 startRow = currentAnchor.row;
             } else {
@@ -58,10 +60,10 @@ public class AI{
                 startRow = currentAnchor.row - getAnchorPosition(currentAnchor, bestWord);
             }
 
-            Move move = new Move(bestWord , startRow , startCol ,currentAnchor.across, maxScore , bot);
+            move = new Move(bestWord , startRow , startCol ,currentAnchor.isAcross(), maxScore , bot);
             //move.execute(Board?);
         }
-        return true;
+        return move;
     }
 
     private int getAnchorPosition(Anchor anchor, ArrayList<Tile> word){
@@ -70,16 +72,16 @@ public class AI{
                 return c;
             }
         }
-        return -1000;
+        return -1000; //return something ridiculous if not there
     }
 
     private boolean fitsOnBoard(Anchor anchor, ArrayList<Tile> word){
         //check if word would cause spilling off the edge of the board
         int anchorPos = getAnchorPosition(anchor, word);
         int prefixLength = anchorPos;
-        int posfixLength = word.size() - anchorPos - 1 ;
+        int postfixLength = word.size() - anchorPos - 1 ;
 
-        if (anchor.prefixCap >= prefixLength && anchor.postfixCap >= posfixLength){
+        if (anchor.prefixCap >= prefixLength && anchor.postfixCap >= postfixLength){
             return true;
         } else {
             return false;
@@ -134,12 +136,11 @@ public class AI{
         }
     }
 
-    void  getStartingWord(ArrayList<Tile> inputTiles, ArrayList<Tile> tilesToBeUsed, String currentWord, int score){
+    public void  getStartingWord(ArrayList<Tile> inputTiles, ArrayList<Tile> tilesToBeUsed, String currentWord, int score){
         for (int tileNo = 0 ; tileNo < inputTiles.size() ; tileNo++){
             Tile curTile = inputTiles.get(tileNo);
 
             if (isValidPrefix(currentWord + curTile.letter)){
-
                 ArrayList<Tile> remainingTiles = new ArrayList<Tile>( inputTiles);
                 ArrayList<Tile> tilesInWord = new ArrayList<Tile>(tilesToBeUsed);
                 remainingTiles.remove(tileNo);
@@ -204,7 +205,6 @@ public class AI{
                                 endCol++;
                                 break;
                             }
-
                             if (!boardSpaces[row    ][endCol + 2].getTile().equals(null)){
                                 break;
                             }
@@ -295,4 +295,14 @@ public class AI{
         return anchors;
     }
 
+    public void setTrie(Trie trie){
+        this.trie = trie;
+    }
+
+    public void setBoard(BoardSpace[][] newBoard){
+        boardSpaces = newBoard;
+        maxScore = 0;
+    }
+
+    public void setTray(ArrayList<Tile> newTray){ this.tray = newTray; }
 }

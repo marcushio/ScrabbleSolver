@@ -7,9 +7,9 @@ import java.util.ArrayList;
  */
 
 public class Move {
-    ArrayList<Tile> tiles;
-    int startRow;
-    int startCol;
+    private ArrayList<Tile> tiles;
+    private int startRow;
+    private int startCol;
     boolean across;
     int score;
     Player player;
@@ -35,17 +35,7 @@ public class Move {
         this.anchor = anchor;
     }
 
-    /*
-    @Override
-    public String toString() {
-        StringBuilder word = new StringBuilder();
-        for (Tile tile: tiles){
-            word.append(tile.letter);
-        }
-        return player.name + " places '" + word.toString() + "' for " + score + " points \n";
-    }
-
-     */
+    public boo
 
     void execute(Tile[][] boardArray){
         int row = startRow;
@@ -63,7 +53,6 @@ public class Move {
         //player.awardPoints(score);
         //HumanMove.execute(player);
         player.fillTray();
-
     }
 
 }

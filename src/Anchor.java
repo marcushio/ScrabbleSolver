@@ -8,7 +8,7 @@ public class Anchor {
     Tile anchorTile;
     int prefixCap;
     int postfixCap;
-    boolean across;
+    private boolean across;
 
     public Anchor(int row, int col, Tile anchorTile, int prefixCap, int postfixCap, boolean across) {
         this.row = row;
@@ -18,4 +18,6 @@ public class Anchor {
         this.postfixCap = postfixCap;
         this.across = across;
     }
+
+    public boolean isAcross(){ return across; }
 }
