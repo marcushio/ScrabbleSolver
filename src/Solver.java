@@ -53,9 +53,7 @@ public class Solver {
     /**
      * Used to read the board configuration in. The specs say that it will be fed in through standard input. It sets
      * all it's fields according to the input.
-     * The format is the size of the board in the first line,
-     * followed by the actual board represented as a string and last the tray.
-     *
+     * The format is the size of the board in the first line, followed by the actual board represented as a string and last the tray.
      */
     private void readBoard(){
         try(Scanner scanner = new Scanner(System.in)){
@@ -63,7 +61,6 @@ public class Solver {
             System.out.println("Enter your board configuration");
             int boardSize = Integer.parseInt(scanner.nextLine());
             BoardSpace[][] boardSpaces = new BoardSpace[boardSize][boardSize];
-
             for(int i = 0; i < boardSize; i++){
                 for(int j = 0; j < boardSize; j++){
                     token = scanner.next();
@@ -79,42 +76,10 @@ public class Solver {
         }
     }
 
-    /**
-     * return best move? or have it make the move? Also should i feed board and tray?
-     * do i want this thing to have to check for prefixes
-     *
-     * ok new idea, grow from anchors?
-     */
-    public void solve( ){
-        Trie.Node currentNode = trie.root;
-        ArrayList<Tile> remainingTiles = new ArrayList<Tile>( tray );
-        ArrayList<Tile> tilesInWord = new ArrayList<Tile>();
-        int anchorLocation = 0;
-
-            for(Tile tile : board.getPlayableLetters()){
-                if(currentNode.hasChild(tile.getLetter())){
-                    currentNode = currentNode.children.get(tile.getLetter());
-                    tilesInWord.add(tile);
-                }
-            }
-            anchorLocation++;
-
-
-    }
-
-    /**
-     * This checks to see if prefix is part of the trie
-     * @param currentLetters
-     * @return
-     */
-    private boolean isValidPrefix(ArrayList<Tile> currentLetters){
-
-        return false;
-    }
-
     public static void main(String[] args){
+        Constants constantValues = new Constants();
         Solver solver = new Solver(args[0]);
         System.out.println("dictionary file has been read.");
-        //solver.readBoard();
+        solver.readBoard();
     }
 }

@@ -28,6 +28,7 @@ public class Constants {
     public static final int TILE_HEIGHT = 40;
     public static final int BOARD_DIMENSIONS = 15;
     public Map<Tile, Integer> prototypes = new HashMap<Tile, Integer>() ; //tile prototypes maps a tile to it's frequency
+    public static Map<String, Integer> letterPoints = new HashMap<String, Integer>();
 
     public Constants(){
         readTileInfo();
@@ -36,15 +37,15 @@ public class Constants {
     /**
      * returns the point value of a given letter
      */
-    public int getLetterPoints(String letter){
-        return prototypes.get(letter);
+    public Map<String, Integer> getLetterPoints(String letter){
+        return letterPoints;
     }
 
     /**
      * reads tile information from the file.
      */
     private void readTileInfo(){
-        TilePool sock = new TilePool();
+        TilePool sock = TilePool.getInstance();
         String fileLine = "";
         try (BufferedReader fileReader = new BufferedReader(new FileReader("res"+ File.separator+Constants.TILE_CONFIG_FILE))) {
             while ((fileLine = fileReader.readLine()) != null) {

@@ -15,7 +15,7 @@ public class TilePool {
 
     public static TilePool getInstance(){ return instance; }
 
-    public TilePool(){};
+    public TilePool(){tileSet = new ArrayList<Tile>(); }
 
     public TilePool(ArrayList<Tile> tileSet){
         this.tileSet = tileSet;
@@ -29,7 +29,6 @@ public class TilePool {
         tileSet.remove(index);
         return tile;
     }
-
 
     public void addMultipleTiles(Tile tile , int quantity){
         for (int i = 0 ; i < quantity ; i++){

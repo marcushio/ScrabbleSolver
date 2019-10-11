@@ -12,14 +12,21 @@ public class Board extends Observable {
     private int size;
     private BoardSpace[][] boardSpaces;
     private Tile[][] board;
-    private List<Tile> downPlayableLetters;
-    private List<Tile> acrossPlayableLetters;
     private static final Board instance;
 
     static{ instance = new Board();}
 
     public static Board getInstance(){
         return instance;
+    }
+
+    public Board(){
+        boardSpaces = new BoardSpace[Constants.BOARD_DIMENSIONS][Constants.BOARD_DIMENSIONS];
+        for(int i = 0; i < Constants.BOARD_DIMENSIONS; i++){
+            for(int j = 0; j < Constants.BOARD_DIMENSIONS; j++){
+                boardSpaces[i][j] = new BoardSpace(i, j);
+            }
+        }
     }
 
     public Board(int size){
@@ -30,6 +37,7 @@ public class Board extends Observable {
     public Board(int size, BoardSpace[][] board){
         this.size = size;
         this.boardSpaces = board;
+        /*
         playableLetters = new ArrayList<Tile>();
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
@@ -39,6 +47,7 @@ public class Board extends Observable {
                 }
             }
         }
+         */
     }
 
     //this is just for debugging go ahead and delete this later
@@ -50,19 +59,12 @@ public class Board extends Observable {
         }
     }
 
-
     //Getters and Setters live below this line
     /**
      *
      * @return
      */
     public int getSize() { return size; }
-
-    /**
-     *
-     * @return
-     */
-    public List<Tile> getPlayableLetters() { return playableLetters; }
 
     /**
      *
@@ -75,4 +77,6 @@ public class Board extends Observable {
     }
 
     public Tile[][] getBoard(){ return board;}
+
+    public BoardSpace[][] getBoardSpaces(){ return boardSpaces; }
 }

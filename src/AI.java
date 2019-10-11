@@ -5,11 +5,11 @@ import java.util.ArrayList;
  */
 public class AI{
     private Trie trie;
-    Player bot;
-    int maxScore ;
-    ArrayList<Tile> bestWord;
-    ArrayList<Tile> tray;
-    Anchor currentAnchor;
+    private Player bot;
+    private int maxScore ;
+    private ArrayList<Tile> bestWord;
+    private ArrayList<Tile> tray;
+    private Anchor currentAnchor;
     private BoardSpace[][] boardSpaces;
 
     public AI(Player bot) {
@@ -20,7 +20,9 @@ public class AI{
         bestWord = new ArrayList<>();
         getStartingWord( tray , bestWord, "", 0); //maxScore get's updated in here.
         if (maxScore == 0){ return false; }
-        Move move = new Move(bestWord , 7 , 7 - (bestWord.size() / 2) , true , maxScore , bot);
+        Move move =
+                new Move(bestWord , Constants.BOARD_DIMENSIONS/2 ,
+                        Constants.BOARD_DIMENSIONS/2 - (bestWord.size() / 2) , true , maxScore , bot);
         //return the new board
         refillTray();
         return true;
@@ -46,7 +48,6 @@ public class AI{
             //should i have some kind of get new rack of tiles thing?
             return false;
         } else {
-
             int startCol;
             int startRow;
             if (currentAnchor.across){
@@ -121,15 +122,15 @@ public class AI{
         if (trie.searchPrefix(prefix)){
             return true;
         } else {
-                return false;
+            return false;
         }
     }
 
     boolean isValidWord(String word){
         if (trie.searchWord(word)){
-                return true;
+            return true;
         } else {
-                return false;
+            return false;
         }
     }
 
@@ -159,30 +160,30 @@ public class AI{
         }
     }
 
-    ArrayList<Anchor> findAnchors(){
+    public ArrayList<Anchor> findAnchors(){
         ArrayList<Anchor> anchors = new ArrayList<Anchor>();
-        Tile[][] tileArr =  Board.getInstance().getBoard();
-        for (int row = 0 ; row < tileArr.length ; row ++){
-            for (int col = 0 ; col < tileArr[0].length ; col ++){
-                if (!tileArr[row][col].letter.equals(" ")){
+        BoardSpace[][] boardSpaces =  Board.getInstance().getBoardSpaces();
+        for (int row = 0 ; row < boardSpaces.length ; row ++){
+            for (int col = 0 ; col < boardSpaces[0].length ; col ++){
+                if (!boardSpaces[row][col].getTile().equals(null)){ //if no tile here
 
                     int startCol = col;
                     int endCol = col;
 
                     //check how far left the word can go without collisions
-                    if (col > 0 && tileArr[row][col - 1].isBlank){
+                    if (col > 0 && boardSpaces[row][col - 1].getTile().equals(null)){ //SHIIII this is just a check if it's blank right? I messed this up at some point
                         while (startCol > 0){
-                            if (row != Constants.BOARD_DIMENSIONS - 1 && ! tileArr[row + 1][startCol - 1].letter.equals(" ")){
+                            if (row != Constants.BOARD_DIMENSIONS - 1 && ! boardSpaces[row + 1][startCol - 1].getTile().equals(null)){
                                 break;
                             }
-                            if ( row != 0 && ! tileArr[row - 1][startCol - 1].letter.equals(" ")){
+                            if ( row != 0 && ! boardSpaces[row - 1][startCol - 1].getTile().equals(null)){
                                 break;
                             }
                             if (startCol == 1){
                                 startCol--;
                                 break;
                             }
-                            if (!tileArr[row    ][startCol -2].letter.equals(" ")){
+                            if (!boardSpaces[row    ][startCol -2].getTile().equals(null)){
                                 break;
                             }
                             startCol--;
@@ -190,13 +191,13 @@ public class AI{
                     }
 
                     //check how far right the word can go without collisions
-                    if (col < Constants.BOARD_DIMENSIONS - 1 && !tileArr[row][col + 1].letter.equals(" ")){
+                    if (col < Constants.BOARD_DIMENSIONS - 1 && !boardSpaces[row][col + 1].getTile().equals(null)){
                         while (endCol < Constants.BOARD_DIMENSIONS -1 ){
 
-                            if (row != Constants.BOARD_DIMENSIONS - 1 && !tileArr[row + 1][endCol + 1].letter.equals(" ")){
+                            if (row != Constants.BOARD_DIMENSIONS - 1 && !boardSpaces[row + 1][endCol + 1].getTile().equals(null)){
                                 break;
                             }
-                            if ( row != 0 && !tileArr[row - 1][endCol + 1].letter.equals(" ")){
+                            if ( row != 0 && !boardSpaces[row - 1][endCol + 1].getTile().equals(null)){
                                 break;
                             }
                             if (endCol == Constants.BOARD_DIMENSIONS - 2){
@@ -204,27 +205,26 @@ public class AI{
                                 break;
                             }
 
-                            if (!tileArr[row    ][endCol + 2].letter.equals(" ")){
+                            if (!boardSpaces[row    ][endCol + 2].getTile().equals(null)){
                                 break;
                             }
-
                             endCol++;
                         }
                     }
 
                     //add the horizontal anchors
                     if (col - startCol > 0 && endCol - col > 0){ // words that can go left or right
-                        anchors.add(new Anchor(row, col, tileArr[row][col], col - startCol, endCol - col , true));
+                        anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), col - startCol, endCol - col , true));
                     } else {
                         //if only one then we need to do additional checks
                         if (col - startCol > 0){
-                            if (col < Constants.BOARD_DIMENSIONS - 1 && !tileArr[row][col + 1].letter.equals(" ")){  // words that can only go left
-                                anchors.add(new Anchor(row, col, tileArr[row][col], col - startCol, endCol - col , true));
+                            if (col < Constants.BOARD_DIMENSIONS - 1 && !boardSpaces[row][col + 1].getTile().equals(null)){  // words that can only go left
+                                anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), col - startCol, endCol - col , true));
                             }
                         }
                         if (endCol - col > 0){
-                            if (col > 0 && !tileArr[row][col - 1 ].letter.equals(" ")){ // words that can only go right
-                                anchors.add(new Anchor(row, col, tileArr[row][col], col - startCol, endCol - col , true));
+                            if (col > 0 && !boardSpaces[row][col - 1 ].getTile().equals(null)){ // words that can only go right
+                                anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), col - startCol, endCol - col , true));
                             }
                         }
                     }
@@ -234,19 +234,19 @@ public class AI{
                     int endRow = row;
 
                     //check how high the word can go without collisions
-                    if (row > 0 && tileArr[row - 1][col].letter.equals(" ")){
+                    if (row > 0 && boardSpaces[row - 1][col].getTile().equals(null)){
                         while (startRow > 0){
-                            if (col < Constants.BOARD_DIMENSIONS - 1 && !tileArr[startRow - 1][col + 1].letter.equals(" ")){
+                            if (col < Constants.BOARD_DIMENSIONS - 1 && !boardSpaces[startRow - 1][col + 1].getTile().equals(null)){
                                 break;
                             }
-                            if (col > 0 && !tileArr[startRow - 1][col - 1].letter.equals(" ")){
+                            if (col > 0 && !boardSpaces[startRow - 1][col - 1].getTile().equals(null)){
                                 break;
                             }
                             if (startRow == 1){
                                 startRow--;
                                 break;
                             }
-                            if (!tileArr[startRow - 2][col    ].letter.equals(" ")){
+                            if (!boardSpaces[startRow - 2][col    ].getTile().equals(null)){
                                 break;
                             }
                             startRow--;
@@ -255,43 +255,40 @@ public class AI{
                     }
 
                     //check how low the word can go without collisions
-                    if (row < Constants.BOARD_DIMENSIONS - 1 && tileArr[row + 1][col].letter.equals(" ")){
+                    if (row < Constants.BOARD_DIMENSIONS - 1 && boardSpaces[row + 1][col].getTile().equals(null)){
                         while (endRow < Constants.BOARD_DIMENSIONS -1){
-                            if (col < Constants.BOARD_DIMENSIONS - 1 && !tileArr[endRow + 1][col + 1].letter.equals(" ")){
+                            if (col < Constants.BOARD_DIMENSIONS - 1 && !boardSpaces[endRow + 1][col + 1].getTile().equals(null)){
                                 break;
                             }
-                            if (col > 0 &&	!tileArr[endRow + 1][col - 1].letter.equals(" ")){
+                            if (col > 0 &&	!boardSpaces[endRow + 1][col - 1].getTile().equals(null)){
                                 break;
                             }
                             if (endRow == Constants.BOARD_DIMENSIONS - 2){
                                 endRow++;
                                 break;
                             }
-                            if(!tileArr[endRow + 2][col].letter.equals(" ")){
+                            if(!boardSpaces[endRow + 2][col].getTile().equals(null)){
                                 break;
                             }
-
                             endRow++;
                         }
                     }
 
 
                     if (row - startRow > 0 && endRow - row > 0){
-                        anchors.add(new Anchor(row, col, tileArr[row][col], row - startRow, endRow - row, false));
+                        anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), row - startRow, endRow - row, false));
                     } else{//if only one then we need to do additional checks
                         if (row - startRow > 0){ //words that can only go up
-                            if (row < Constants.BOARD_DIMENSIONS-1 && tileArr[row+1][col].letter.equals(" ")){
-                                anchors.add(new Anchor(row, col, tileArr[row][col], row - startRow, endRow - row, false));
+                            if (row < Constants.BOARD_DIMENSIONS-1 && boardSpaces[row+1][col].getTile().equals(null)){
+                                anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), row - startRow, endRow - row, false));
                             }
                         }
                         if (endRow - row > 0){ //words that can only go down
-                            if (row > 0 && tileArr[row-1][col].letter.equals(" ")){
-                                anchors.add(new Anchor(row, col, tileArr[row][col], row - startRow, endRow - row, false));
+                            if (row > 0 && boardSpaces[row-1][col].getTile().equals(null)){
+                                anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), row - startRow, endRow - row, false));
                             }
                         }
                     }
-
-
                 }
             }
         }

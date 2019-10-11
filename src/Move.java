@@ -61,7 +61,7 @@ public class Move {
             player.removeTrayTile(tile);
         }
         //player.awardPoints(score);
-        HumanMove.execute(player);
+        //HumanMove.execute(player);
         player.fillTray();
 
     }

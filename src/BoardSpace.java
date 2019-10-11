@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author: Marcus Trujillo
  * @version: 9/26/2019
@@ -7,7 +10,7 @@
 enum MultiplierType{LETTER, WORD, NONE;}
 
 public class BoardSpace {
-    private Constants info; //just an object that stores info about the game like tile scores etc.
+    private Map<String, Integer> info = new HashMap<String, Integer>(Constants.letterPoints); //just an object that stores info about the game like tile scores etc.
     private Tile tile; //null if no tile has been played on this space
     private int multiplyBy;
     private MultiplierType multiplierType;
@@ -19,10 +22,10 @@ public class BoardSpace {
      *                  word, ".3" would be a triple letter. We expect good input with an integer repping the multiplier
      */
     public BoardSpace(String textSpace){
-        info = new Constants();
         multiplyBy = 1;
+        info = new HashMap<String, Integer>(Constants.letterPoints);
         if(textSpace.length() < 2) {
-            tile = new Tile(textSpace, info.getLetterPoints(textSpace));
+            tile = new Tile(textSpace, info.get(textSpace));
         } else if (textSpace.length() == 2) {
             if (textSpace.charAt(0) != '.') {
                 multiplyBy = Integer.parseInt(textSpace.substring(0, 1));
@@ -35,6 +38,14 @@ public class BoardSpace {
                 multiplierType = MultiplierType.NONE;
             }
         }
+    }
+
+    public BoardSpace(int row, int column){
+        multiplyBy = 1;
+        tile = null;
+        multiplierType = MultiplierType.NONE;
+        this.rowIndex = row;
+        this.colIndex = column;
     }
 
     /**

@@ -11,7 +11,6 @@ public class Anchor {
     boolean across;
 
     public Anchor(int row, int col, Tile anchorTile, int prefixCap, int postfixCap, boolean across) {
-        super();
         this.row = row;
         this.col = col;
         this.anchorTile = anchorTile;
@@ -19,12 +18,4 @@ public class Anchor {
         this.postfixCap = postfixCap;
         this.across = across;
     }
-
-    @Override
-    public String toString() {
-        return "Anchor [" + row + "," + col + "] " + anchorTile.letter + ", pre: " + prefixCap
-                + ", post: " + postfixCap + ", across=" + across + "]";
-    }
-
-
 }
