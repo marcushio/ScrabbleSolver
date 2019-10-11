@@ -3,14 +3,33 @@
  * @version: 10/1/2019
  * This handles the scoring logic.
  */
+
 public class Scorer {
-    //so in order to score I think I just need to know the sequence of tiles that we're goin to lay over
-    //and then the word that we're going to play
-    //If you have all that info then we're good to go hell we probably can just use a static method
-    //arr of tiles and arr of tiles
-    //idea one -> two arrays for score
-    //idea two -> i don't need to get mapped right? I think Idea one is just fine
-    public static void score(Tile[] word, Tile[] spaces){
-        
+//   [l]
+//[a][l][l]
+//   [a]
+//   [m]
+    /**
+     *
+     * @param word is the word that you're trying to play
+     * @param spaces is the sequence of spaces and tiles on the board that you're trying to play on.
+     * @return the score of the potential move, -1 if it's not a valid move
+     */
+    public static int score(Tile[] word, BoardSpace[] spaces){
+        int wordScore = 0;
+        if(word.length != spaces.length) return -1;
+        //valid check goes here
+        boolean hasWordMultiplier = false;
+        int multiplyBy = 1; //make multiplier 1 by default (aka the multiplier doesn't change the value
+        for(int i=0; i < word.length; i++){
+            MultiplierType multiplierType = spaces[i].getMultiplierType();
+            if(multiplierType == MultiplierType.LETTER) {
+                wordScore += (word[i].getPointValue() * spaces[i].getMultiplyBy());
+            } else if(multiplierType == MultiplierType.WORD) {
+                //I don't think it's going to get more than one word multiplier but just in case, take the biggest
+                if(spaces[i].getMultiplyBy() > multiplyBy) multiplyBy = spaces[i].getMultiplyBy();
+            }
+        }
+        return wordScore * multiplyBy;
     }
 }

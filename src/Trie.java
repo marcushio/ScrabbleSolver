@@ -8,10 +8,11 @@ import java.util.List;
 
 /**
  * @author: Marcus Trujillo
- * @version: brief class description
+ * @version:
+ * A retrieval tree that we're using to generate words for the solver to try.
  */
 public class Trie {
-    private Node root;
+    public Node root;
     private int wordCount;
 
     public Trie(){
@@ -23,18 +24,27 @@ public class Trie {
      * Each node has a hashmap of it's children
      * Each node has a letter. If a node is a root or the end of a word, then it's letter value is null
      */
-    private class Node{
+     public class Node{
         public HashMap<String, Node> children = new HashMap<String, Node>(); //each "string" is a single letter of the word
         public String letter;
+        public boolean isLeaf= false;
 
+        public Node() {}
         public Node(String letter){
             this.letter = letter;
         }
-        private boolean isCompleteWord(){
+
+        public boolean isCompleteWord(){
             if(children.containsValue(null)) return true;
             return false;
         }
+
+        public boolean hasChild(String letter){
+            if(children.containsKey(letter)) return true;
+            return false;
+        }
     }
+
 
     public void addWord(String word){
         Node currentNode = root;
@@ -50,6 +60,40 @@ public class Trie {
         }
         currentNode.children.put(null, null);
         wordCount++;
+    }
+
+    public Boolean searchWord(String word) {
+        if (word == null|| word == "") return false;
+        Node current = root;
+        for(int i=0; i < word.length(); i++){
+            String currentLetter = word.substring(i,i+1);
+            HashMap<String, Node> child = current.children;
+            if (child.containsKey(currentLetter)){
+                current = child.get(currentLetter);
+            } else{
+                return false;
+            }
+        }
+        if (current.isLeaf){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean searchPrefix(String word) {
+        if (word == null) return false;
+        Node cur = root;
+        for(int i=0; i < word.length(); i++){
+            String currentLetter = word.substring(i,i+1);
+            HashMap<String, Node> child = cur.children;
+            if (child.containsKey(currentLetter)){
+                cur = child.get(currentLetter);
+            } else{
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void main(String[] args){

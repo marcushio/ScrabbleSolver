@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author: Marcus Trujillo
  * @version: 9/26/2019
@@ -7,7 +10,8 @@
 enum MultiplierType{LETTER, WORD, NONE;}
 
 public class BoardSpace {
-    private String letter;
+    private Map<String, Integer> info = new HashMap<String, Integer>(Constants.letterPoints); //just an object that stores info about the game like tile scores etc.
+    private Tile tile; //null if no tile has been played on this space
     private int multiplyBy;
     private MultiplierType multiplierType;
     private int rowIndex, colIndex;
@@ -19,8 +23,9 @@ public class BoardSpace {
      */
     public BoardSpace(String textSpace){
         multiplyBy = 1;
+        info = new HashMap<String, Integer>(Constants.letterPoints);
         if(textSpace.length() < 2) {
-            letter = textSpace;
+            tile = new Tile(textSpace, info.get(textSpace));
         } else if (textSpace.length() == 2) {
             if (textSpace.charAt(0) != '.') {
                 multiplyBy = Integer.parseInt(textSpace.substring(0, 1));
@@ -35,16 +40,24 @@ public class BoardSpace {
         }
     }
 
+    public BoardSpace(int row, int column){
+        multiplyBy = 1;
+        tile = null;
+        multiplierType = MultiplierType.NONE;
+        this.rowIndex = row;
+        this.colIndex = column;
+    }
+
     /**
      * Check's if the space has been used by a letter
      * @return true if the space is not occupied by a letter, else false
      */
     public boolean isEmpty(){
-        if ( letter == null ) return true;
+        if ( tile == null ) return true;
         return false;
     }
 
-    public String getLetter(){ return letter; }
+    public Tile getTile(){ return tile; }
 
     public int getMultiplyBy() { return multiplyBy; }
 

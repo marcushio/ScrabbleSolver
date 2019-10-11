@@ -5,7 +5,7 @@
  */
 public class Tile {
     String letter;
-    int pointValue;
+    public int pointValue;
 
     public Tile(String letter, int pointValue){
         this.letter = letter;

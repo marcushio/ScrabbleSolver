@@ -6,27 +6,60 @@ import java.util.Observable;
  * @author: Marcus Trujillo
  * @version:
  * represents the board we're playing off of.
+ * I think for the sake of ease later, it would make sense to have two playable lists. One for up, and one for down.
  */
 public class Board extends Observable {
-    int size;
-    BoardSpace[][] board;
-    List<String> playableLetters;
-    List<Tile> tilePool;
+    private int size;
+    private BoardSpace[][] boardSpaces;
+    private Tile[][] board;
+    private static final Board instance;
+
+    static{ instance = new Board();}
+
+    public static Board getInstance(){
+        return instance;
+    }
+
+    public Board(){
+        boardSpaces = new BoardSpace[Constants.BOARD_DIMENSIONS][Constants.BOARD_DIMENSIONS];
+        for(int i = 0; i < Constants.BOARD_DIMENSIONS; i++){
+            for(int j = 0; j < Constants.BOARD_DIMENSIONS; j++){
+                boardSpaces[i][j] = new BoardSpace(i, j);
+            }
+        }
+    }
 
     public Board(int size){
         this.size = size;
-        board = new BoardSpace[size][size];
+        boardSpaces = new BoardSpace[size][size];
     }
 
     public Board(int size, BoardSpace[][] board){
         this.size = size;
-        this.board = board;
-        //read through board to populate playables
+        this.boardSpaces = board;
+        /*
+        playableLetters = new ArrayList<Tile>();
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                if( ! board[i][j].isEmpty() ) {
+                    playableLetters.add( board[i][j].getTile() ) ;
+                    //iterate through and see which are playable in which direction
+                }
+            }
+        }
+         */
     }
 
+    //this is just for debugging go ahead and delete this later
+    private void printBoard(int boardSize){
+        for(int i = 0; i < boardSize; i++){
+            for(int j = 0; j < boardSize; j++){
+                System.out.println(boardSpaces[i][j]);
+            }
+        }
+    }
 
     //Getters and Setters live below this line
-
     /**
      *
      * @return
@@ -35,17 +68,15 @@ public class Board extends Observable {
 
     /**
      *
-     * @return
-     */
-    public List<String> getPlayableLetters() { return playableLetters; }
-
-    /**
-     *
      * @param row
      * @param column
      * @return the specific space on the board at the given row and column
      */
     public BoardSpace getSpaceAt(int row, int column){
-        return board[row][column];
+        return boardSpaces[row][column];
     }
+
+    public Tile[][] getBoard(){ return board;}
+
+    public BoardSpace[][] getBoardSpaces(){ return boardSpaces; }
 }

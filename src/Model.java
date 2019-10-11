@@ -16,7 +16,7 @@ public class Model {
     public List<Tile> tilePool;
 
     public Model(){
-        board = new Board(Constants.STANDARD_BOARD_SIZE);
+        board = new Board(Constants.BOARD_DIMENSIONS);
         player = new Player();
         tilePool = new ArrayList<Tile>();
         fillTilePool();
