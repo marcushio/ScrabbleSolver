@@ -47,7 +47,7 @@ public class AI{
             findHighestScoringWord(inputTiles, new ArrayList<Tile>(), "", 0, anchor);
         }
         if (bestWord == null || bestWord.size() == 0){
-            //should i have some kind of get new rack of tiles thing?
+            //should i have some kind of get new tray of tiles thing?
             return move;
         } else {
             int startCol;
@@ -163,10 +163,11 @@ public class AI{
 
     public ArrayList<Anchor> findAnchors(){
         ArrayList<Anchor> anchors = new ArrayList<Anchor>();
-        BoardSpace[][] boardSpaces =  Board.getInstance().getBoardSpaces();
+        //BoardSpace[][] boardSpaces =  Board.getInstance().getBoardSpaces(); this is now set from the outside because my solver is using the ai
         for (int row = 0 ; row < boardSpaces.length ; row ++){
             for (int col = 0 ; col < boardSpaces[0].length ; col ++){
-                if (boardSpaces[row][col].getTile() != null){ //if no tile here
+                Tile exp =  boardSpaces[row][col].getTile();
+                if (exp != null){ //if no tile here
 
                     int startCol = col;
                     int endCol = col;
@@ -192,7 +193,7 @@ public class AI{
                     }
 
                     //check how far right the word can go without collisions
-                    if (col < Constants.BOARD_DIMENSIONS - 1 && boardSpaces[row][col + 1].getTile() != null){
+                    if (col < Constants.BOARD_DIMENSIONS - 1 && boardSpaces[row][col + 1].getTile() == null){
                         while (endCol < Constants.BOARD_DIMENSIONS -1 ){
 
                             if (row != Constants.BOARD_DIMENSIONS - 1 && boardSpaces[row + 1][endCol + 1].getTile() != null){
@@ -229,12 +230,11 @@ public class AI{
                         }
                     }
 
-                    //check not at edges - have to re-think algorithm for edges.
                     int startRow = row;
                     int endRow = row;
 
                     //check how high the word can go without collisions
-                    if (row > 0 && boardSpaces[row - 1][col].getTile() == (null)){
+                    if (row > 0 && boardSpaces[row - 1][col].getTile() == null){
                         while (startRow > 0){
                             if (col < Constants.BOARD_DIMENSIONS - 1 && boardSpaces[startRow - 1][col + 1].getTile() != (null)){
                                 break;
@@ -270,6 +270,7 @@ public class AI{
                             if(boardSpaces[endRow + 2][col].getTile() != (null)){
                                 break;
                             }
+
                             endRow++;
                         }
                     }

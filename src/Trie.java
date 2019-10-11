@@ -27,7 +27,6 @@ public class Trie {
      public class Node{
         public HashMap<String, Node> children = new HashMap<String, Node>(); //each "string" is a single letter of the word
         public String letter;
-        public boolean isLeaf= false;
 
         public Node() {}
         public Node(String letter){
@@ -67,14 +66,12 @@ public class Trie {
         Node current = root;
         for(int i=0; i < word.length(); i++){
             String currentLetter = word.substring(i,i+1);
-            HashMap<String, Node> child = current.children;
-            if (child.containsKey(currentLetter)){
-                current = child.get(currentLetter);
-            } else{
-                return false;
+            HashMap<String, Node> children = current.children;
+            if (children.containsKey(currentLetter)){
+                current = children.get(currentLetter);
             }
         }
-        if (current.isLeaf){
+        if (current.children.containsKey(null)){
             return true;
         } else {
             return false;

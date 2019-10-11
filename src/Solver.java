@@ -58,6 +58,7 @@ public class Solver {
             String token = null;
             System.out.println("Enter your board configuration");
             int boardSize = Integer.parseInt(scanner.nextLine());
+            Constants.setBoardDimensions(boardSize);
             boardSpaces = new BoardSpace[boardSize][boardSize];
             for(int i = 0; i < boardSize; i++){
                 for(int j = 0; j < boardSize; j++){

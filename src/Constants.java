@@ -26,7 +26,7 @@ public class Constants {
     public static final String WORD = "Word\n";
     public static final int TILE_WIDTH = 40;
     public static final int TILE_HEIGHT = 40;
-    public static final int BOARD_DIMENSIONS = 15;
+    public static int BOARD_DIMENSIONS = 15;
     public Map<Tile, Integer> prototypes = new HashMap<Tile, Integer>() ; //tile prototypes maps a tile to it's frequency
     public static Map<String, Integer> letterPoints = new HashMap<String, Integer>();
 
@@ -41,6 +41,12 @@ public class Constants {
         return letterPoints;
     }
 
+    /**
+     *
+     */
+    public static void setBoardDimensions(int newDimens){
+        BOARD_DIMENSIONS = newDimens;
+    }
     /**
      * reads tile information from the file.
      */
