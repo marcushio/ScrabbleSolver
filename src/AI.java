@@ -17,16 +17,16 @@ public class AI{
         this.bot = bot;
     }
 
-    boolean makeFirstMove(){
+    public Move makeFirstMove(){
         bestWord = new ArrayList<>();
         getStartingWord( tray , bestWord, "", 0); //maxScore get's updated in here.
-        if (maxScore == 0){ return false; }
+        if (maxScore == 0){ return null; }
+        //right now the AI is dumb and always starts on the first tile.... this is only safe with boardSize/2 >= 7
         Move move =
                 new Move(bestWord , Constants.BOARD_DIMENSIONS/2 ,
                         Constants.BOARD_DIMENSIONS/2 - (bestWord.size() / 2) , true , maxScore , bot);
-        //return the new board
         refillTray();
-        return true;
+        return move;
     }
 
     public void refillTray(){

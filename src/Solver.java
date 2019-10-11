@@ -84,18 +84,29 @@ public class Solver {
         }
     }
 
+    private boolean boardIsEmpty(BoardSpace[][] board){
+        for(BoardSpace[] row: board){
+            for(BoardSpace space: row){
+                if(!space.isEmpty()) return false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args){
         Constants constantValues = new Constants();
         Solver solver = new Solver(args[0]);
         System.out.println("dictionary file has been read.");
         solver.readBoard();
         System.out.println("board has been read");
+
         AI ai = new AI(new Player());
         ai.setTrie(solver.trie);
         ai.setBoard(solver.boardSpaces);
         ai.setTray(solver.tray);
-        //if board loaded in isn't an empty board
-        Move move = ai.makeSubsequentMove();
+
+        if(solver.boardIsEmpty(solver.boardSpaces)) { Move move = ai.makeFirstMove(); } //this'll be problematic with smaller boards atm
+        else { Move move = ai.makeSubsequentMove();}
         System.out.println("move made");
         //else
         //ai.makeFirstMove();
