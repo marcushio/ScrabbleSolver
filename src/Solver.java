@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class Solver {
     private Trie trie;
-    //private BoardSpace[][] boardSpaces;
+    private BoardSpace[][] boardSpaces;
     private List<Tile> playableLetters;
     private Board board;
     private List<Tile> tray;
@@ -60,18 +60,20 @@ public class Solver {
             String token = null;
             System.out.println("Enter your board configuration");
             int boardSize = Integer.parseInt(scanner.nextLine());
-            BoardSpace[][] boardSpaces = new BoardSpace[boardSize][boardSize];
+            boardSpaces = new BoardSpace[boardSize][boardSize];
             for(int i = 0; i < boardSize; i++){
                 for(int j = 0; j < boardSize; j++){
                     token = scanner.next();
                     boardSpaces[i][j] = new BoardSpace(token);
+                    System.out.println(i + " " + j);
                 }
             }
             stringTray = scanner.next();
             board = new Board(boardSize, boardSpaces);
             //printBoard(boardSize);
             //System.out.println("Tray: " + tray);
-        }catch (Exception ex){
+        } catch (NullPointerException ex){
+            System.out.println("Null pointer thrown in readboard at ");
             ex.printStackTrace();
         }
     }

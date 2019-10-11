@@ -59,6 +59,7 @@ public class Constants {
                     sock.addMultipleTiles(newTile, frequency);
                 }
                 prototypes.put( newTile, frequency);
+                letterPoints.put(letter, pointValue);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
