@@ -159,7 +159,7 @@ public class AI{
                 getStartingWord(remainingTiles, tilesInWord ,currentWord  + curTile.letter, score + curTile.pointValue );
 
                 if (isValidWord(currentWord + curTile.letter)){
-                    Move move = move = new Move(tilesInWord,  Constants.BOARD_DIMENSIONS/3, Constants.BOARD_DIMENSIONS/3, true, bot );
+                    Move move = move = new Move(tilesInWord,  Constants.BOARD_DIMENSIONS/2, Constants.BOARD_DIMENSIONS/2, true, bot );
                     int currentWordScore = Scorer.score(move , boardSpaces);
                     if (currentWord.length() >= 6){
                         currentWordScore += 50;
