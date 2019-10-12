@@ -79,21 +79,20 @@ public class Solver {
         ArrayList<BoardConfig> boardConfigs = new ArrayList<BoardConfig>();
         try(Scanner scanner = new Scanner(System.in)){
             while(scanner.hasNext()) {
-                String token = null;
+                String token = null; // i can probably integrate this instead of explicitly stating this var
                 System.out.println("Enter your board configuration");
-                int boardSize = Integer.parseInt(scanner.nextLine());
+                int boardSize = Integer.parseInt(scanner.next());
                 Constants.setBoardDimensions(boardSize);
                 boardSpaces = new BoardSpace[boardSize][boardSize];
                 for (int i = 0; i < boardSize; i++) {
                     for (int j = 0; j < boardSize; j++) {
                         token = scanner.next();
-                        boardSpaces[i][j] = new BoardSpace(token);
+                        boardSpaces[i][j] = new BoardSpace(token.toLowerCase());
                     }
                 }
                 stringTray = scanner.next();
-                setTray(stringTray);
-
-                boardConfigs.add(new BoardConfig(boardSize, boardSpaces, tray));
+                //tray = makeTrayFromString(stringTray);
+                boardConfigs.add(new BoardConfig(boardSize, boardSpaces, makeTrayFromString(stringTray)));
                 //board = new Board(boardSize, boardSpaces);
                 //printBoard(boardSize);
                 //System.out.println("Tray: " + tray);
@@ -105,11 +104,13 @@ public class Solver {
         return boardConfigs;
     }
 
-    private void setTray(String stringTray){
+    private ArrayList<Tile> makeTrayFromString(String stringTray){
+        ArrayList<Tile> tray = new ArrayList<Tile>();
         for(int i = 0; i < stringTray.length(); i++){
             String letter = stringTray.substring(i, i+1);
-            this.tray.add(new Tile(letter, Constants.letterPoints.get(letter)));
+            tray.add(new Tile(letter, Constants.letterPoints.get(letter)));
         }
+        return tray;
     }
 
     private boolean boardIsEmpty(BoardSpace[][] board){
@@ -133,15 +134,16 @@ public class Solver {
         Constants constantValues = new Constants();
         Solver solver = new Solver(args[0]);
         System.out.println("dictionary file has been read.");
-        AI ai = new AI(new Player());
-
-        //for the future loop through input file to read multiple boards
         ArrayList<BoardConfig> boardConfigs = solver.readBoards();
         System.out.println("boards have been read");
+        AI ai = new AI(new Player());
         ai.setTrie(solver.trie);
         for(BoardConfig config : boardConfigs) {
+            constantValues.setBoardDimensions(config.getSize());
             ai.setBoard(config.getBoard());
-            ai.setTray(solver.tray);
+            System.out.println("\nThis is what we just set the ai's board to");
+            solver.printBoard(ai.boardSpaces);
+            ai.setTray(config.getTray());
             Move newMove = null;
             if (solver.boardIsEmpty(config.getBoard())) {
                 newMove = ai.makeFirstMove();
@@ -149,10 +151,9 @@ public class Solver {
             else {
                 newMove = ai.makeSubsequentMove();
             }
-            solver.printBoard(ai.boardSpaces);
-            System.out.println("move returned");
-            BoardSpace[][] newBoard = newMove.execute(solver.boardSpaces);
-            System.out.println("move executed");
+            System.out.println("\nmove returned... now executing");
+            BoardSpace[][] newBoard = newMove.execute(config.getBoard());
+            System.out.println("move executed... here's the new board configuratoin");
             solver.printBoard(newBoard);
         }
     }

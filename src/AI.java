@@ -115,7 +115,9 @@ public class AI{
                                 move = new Move(tilesInWord, (anchor.row - getAnchorPosition(anchor,tilesInWord)), anchor.col,false, bot );
                             }
                             int currentWordScore = Scorer.score(move , boardSpaces);
-                            //that's the new scoring don't forget bingo later
+                            if (currentWord.length() >= 6){
+                                currentWordScore += 50;
+                            }
 
                             if (maxScore < currentWordScore){
                                 maxScore =  currentWordScore;
@@ -156,11 +158,13 @@ public class AI{
                 tilesInWord.add(curTile);
                 getStartingWord(remainingTiles, tilesInWord ,currentWord  + curTile.letter, score + curTile.pointValue );
 
-                if (currentWord.length() >= 6){
-                    score += 50;
-                }
-
                 if (isValidWord(currentWord + curTile.letter)){
+                    Move move = move = new Move(tilesInWord,  Constants.BOARD_DIMENSIONS/3, Constants.BOARD_DIMENSIONS/3, true, bot );
+                    int currentWordScore = Scorer.score(move , boardSpaces);
+                    if (currentWord.length() >= 6){
+                        currentWordScore += 50;
+                    }
+
                     if (maxScore < score + curTile.pointValue){
                         maxScore =  score + curTile.pointValue;
                         bestWord = tilesInWord;
