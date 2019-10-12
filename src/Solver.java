@@ -37,6 +37,18 @@ public class Solver {
             this.board = board;
             this.tray = tray;
         }
+
+        public int getSize() {
+            return size;
+        }
+
+        public ArrayList<Tile> getTray() {
+            return tray;
+        }
+
+        public BoardSpace[][] getBoard() {
+            return board;
+        }
     }
 
     /**
@@ -64,27 +76,33 @@ public class Solver {
      * The format is the size of the board in the first line, followed by the actual board represented as a string and last the tray.
      */
     private ArrayList<BoardConfig> readBoards(){
+        ArrayList<BoardConfig> boardConfigs = new ArrayList<BoardConfig>();
         try(Scanner scanner = new Scanner(System.in)){
-            String token = null;
-            System.out.println("Enter your board configuration");
-            int boardSize = Integer.parseInt(scanner.nextLine());
-            Constants.setBoardDimensions(boardSize);
-            boardSpaces = new BoardSpace[boardSize][boardSize];
-            for(int i = 0; i < boardSize; i++){
-                for(int j = 0; j < boardSize; j++){
-                    token = scanner.next();
-                    boardSpaces[i][j] = new BoardSpace(token);
+            while(scanner.hasNext()) {
+                String token = null;
+                System.out.println("Enter your board configuration");
+                int boardSize = Integer.parseInt(scanner.nextLine());
+                Constants.setBoardDimensions(boardSize);
+                boardSpaces = new BoardSpace[boardSize][boardSize];
+                for (int i = 0; i < boardSize; i++) {
+                    for (int j = 0; j < boardSize; j++) {
+                        token = scanner.next();
+                        boardSpaces[i][j] = new BoardSpace(token);
+                    }
                 }
+                stringTray = scanner.next();
+                setTray(stringTray);
+
+                boardConfigs.add(new BoardConfig(boardSize, boardSpaces, tray));
+                //board = new Board(boardSize, boardSpaces);
+                //printBoard(boardSize);
+                //System.out.println("Tray: " + tray);
             }
-            stringTray = scanner.next();
-            setTray(stringTray);
-            board = new Board(boardSize, boardSpaces);
-            //printBoard(boardSize);
-            //System.out.println("Tray: " + tray);
         } catch (NullPointerException ex){
             System.out.println("Null pointer thrown in readboard at ");
             ex.printStackTrace();
         }
+        return boardConfigs;
     }
 
     private void setTray(String stringTray){
@@ -118,23 +136,24 @@ public class Solver {
         AI ai = new AI(new Player());
 
         //for the future loop through input file to read multiple boards
-        while()
-        solver.readBoards();
-        System.out.println("board has been read");
-        solver.printBoard(solver.boardSpaces);
-
-
+        ArrayList<BoardConfig> boardConfigs = solver.readBoards();
+        System.out.println("boards have been read");
         ai.setTrie(solver.trie);
-        ai.setBoard(solver.boardSpaces);
-        ai.setTray(solver.tray);
-
-        Move newMove = null;
-        if(solver.boardIsEmpty(solver.boardSpaces)) { newMove = ai.makeFirstMove(); } //this'll be problematic with smaller boards atm
-        else { newMove = ai.makeSubsequentMove();}
-        solver.printBoard(ai.boardSpaces);
-        System.out.println("move returned");
-        BoardSpace[][] newBoard = newMove.execute(solver.boardSpaces);
-        System.out.println("move executed");
-        solver.printBoard(newBoard);
+        for(BoardConfig config : boardConfigs) {
+            ai.setBoard(config.getBoard());
+            ai.setTray(solver.tray);
+            Move newMove = null;
+            if (solver.boardIsEmpty(config.getBoard())) {
+                newMove = ai.makeFirstMove();
+            } //this'll be problematic with smaller boards atm
+            else {
+                newMove = ai.makeSubsequentMove();
+            }
+            solver.printBoard(ai.boardSpaces);
+            System.out.println("move returned");
+            BoardSpace[][] newBoard = newMove.execute(solver.boardSpaces);
+            System.out.println("move executed");
+            solver.printBoard(newBoard);
+        }
     }
 }
