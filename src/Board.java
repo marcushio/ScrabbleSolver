@@ -11,14 +11,6 @@ import java.util.Observable;
 public class Board extends Observable {
     private int size;
     private BoardSpace[][] boardSpaces;
-    private Tile[][] board;
-    private static final Board instance;
-
-    static{ instance = new Board();}
-
-    public static Board getInstance(){
-        return instance;
-    }
 
     public Board(){
         boardSpaces = new BoardSpace[Constants.BOARD_DIMENSIONS][Constants.BOARD_DIMENSIONS];

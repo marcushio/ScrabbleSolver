@@ -16,6 +16,7 @@ import java.util.Scanner;
  */
 public class Main extends Application {
     Stage primaryStage;
+    Constants info;
     GUI gui;
     Controller controller;
     Board board;
@@ -29,6 +30,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
+        info = new Constants(); 
         board = readBoard(); //read board config and make new board for test
         controller = new Controller(fillDictionary("sowpods.txt"));
         gui = new GUI(primaryStage, board, controller);
