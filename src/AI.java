@@ -11,7 +11,7 @@ public class AI{
     private ArrayList<Tile> bestWord;
     private ArrayList<Tile> tray;
     private Anchor currentAnchor;
-    private BoardSpace[][] boardSpaces;
+    public BoardSpace[][] boardSpaces;
 
     public AI(Player bot) {
         this.bot = bot;
@@ -90,26 +90,35 @@ public class AI{
 
     private void  findHighestScoringWord(ArrayList<Tile> inputTiles, ArrayList<Tile> tilesToBeUsed, String currentWord, int score, Anchor anchor){
         for (int tileNo = 0 ; tileNo < inputTiles.size() ; tileNo++){
-            Tile curTile = inputTiles.get(tileNo);
-            if (curTile == null) break; //ok I gotta admit this was pretty dang sloppy I have to do a better way of handling a null tile
-            if (isValidPrefix(currentWord + curTile.letter)	){
-
+            Tile currentTile = inputTiles.get(tileNo);
+            if (currentTile == null) break; //ok I gotta admit this was pretty dang sloppy I don't usually like using break statements
+            if (isValidPrefix(currentWord + currentTile.letter)	){
                 ArrayList<Tile> remainingTiles = new ArrayList<Tile>( inputTiles);
                 ArrayList<Tile> tilesInWord = new ArrayList<Tile>(tilesToBeUsed);
                 remainingTiles.remove(tileNo);
-                tilesInWord.add(curTile);
-                findHighestScoringWord(remainingTiles, tilesInWord ,currentWord  + curTile.letter, score + curTile.pointValue , anchor);
-
-                if (currentWord.length() >= 7){
-                    score += 50;
-                }
+                tilesInWord.add(currentTile);
+                //score check here when we know it's valid?
+                findHighestScoringWord(remainingTiles, tilesInWord ,currentWord  + currentTile.letter, score + currentTile.pointValue , anchor);
 
                 //need to check if anchor is in the word before we propose it as an answer
-                if (tilesToBeUsed.contains(anchor.anchorTile) || curTile.equals(anchor.anchorTile)){
-                    if (isValidWord(currentWord + curTile.letter)){
+                if (tilesToBeUsed.contains(anchor.anchorTile) || currentTile.equals(anchor.anchorTile)){
+                    if (isValidWord(currentWord + currentTile.letter)){
                         if (fitsOnBoard(anchor, tilesInWord)){
-                            if (maxScore < score + curTile.pointValue){
-                                maxScore =  score + curTile.pointValue;
+                            //^^ all that means we now have a valid possible solution check its score here...
+                            //
+                            //public Anchor(int row, int col, Tile anchorTile, int prefixCap, int postfixCap, boolean across) need these two as references for now
+                            //move = new Move(tilesInWord , startRow , startCol , anchor.isAcross(), bot);
+                            Move move = null; //let's make our move to score
+                            if(anchor.isAcross()){ //make a move to check score bases on anchor being across type
+                                move = new Move(tilesInWord,  anchor.row , (anchor.col - getAnchorPosition(anchor, tilesInWord)), true, bot );
+                            } else if(!anchor.isAcross()){ // make a move to check score on anchor being vert type
+                                move = new Move(tilesInWord, (anchor.row - getAnchorPosition(anchor,tilesInWord)), anchor.col,false, bot );
+                            }
+                            int currentWordScore = Scorer.score(move , boardSpaces);
+                            //that's the new scoring don't forget bingo later
+
+                            if (maxScore < currentWordScore){
+                                maxScore =  currentWordScore;
                                 bestWord = tilesInWord;
                                 currentAnchor = anchor;
                             }
@@ -173,7 +182,7 @@ public class AI{
                     int endCol = col;
 
                     //check how far left the word can go without collisions
-                    if (col > 0 && boardSpaces[row][col - 1].getTile() == (null)){ //SHIIII this is just a check if it's blank right? I messed this up at some point
+                    if (col > 0 && boardSpaces[row][col - 1].getTile() == (null)){
                         while (startCol > 0){
                             if (row != Constants.BOARD_DIMENSIONS - 1 &&  boardSpaces[row + 1][startCol - 1].getTile() != null){
                                 break;

@@ -49,12 +49,23 @@ public class BoardSpace {
      * @param column
      */
     public BoardSpace(int row, int column){
+        info = new HashMap<String, Integer>(Constants.letterPoints);
         stringRep = "..";
         multiplyBy = 1;
         tile = null;
         multiplierType = MultiplierType.NONE;
         this.rowIndex = row;
         this.colIndex = column;
+    }
+
+    public BoardSpace(BoardSpace oldSpace){
+        info = new HashMap<String, Integer>(Constants.letterPoints);
+        stringRep = oldSpace.toString();
+        multiplyBy = oldSpace.getMultiplyBy();
+        tile = oldSpace.getTile();
+        multiplierType = oldSpace.getMultiplierType();
+        this.rowIndex = oldSpace.getRowIndex();
+        this.colIndex = oldSpace.getColIndex();
     }
 
     /**

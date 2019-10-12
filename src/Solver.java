@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,6 +26,17 @@ public class Solver {
     }
     public Solver(Trie trie){
         this.trie = trie;
+    }
+
+    public class BoardConfig{ //use subclass to store all the board configurations that are read in
+        int size;
+        BoardSpace[][] board;
+        ArrayList<Tile> tray;
+        public BoardConfig(int size, BoardSpace[][] board, ArrayList<Tile> tray){
+            this.size = size;
+            this.board = board;
+            this.tray = tray;
+        }
     }
 
     /**
@@ -53,7 +63,7 @@ public class Solver {
      * all it's fields according to the input.
      * The format is the size of the board in the first line, followed by the actual board represented as a string and last the tray.
      */
-    private void readBoard(){
+    private ArrayList<BoardConfig> readBoards(){
         try(Scanner scanner = new Scanner(System.in)){
             String token = null;
             System.out.println("Enter your board configuration");
@@ -105,11 +115,15 @@ public class Solver {
         Constants constantValues = new Constants();
         Solver solver = new Solver(args[0]);
         System.out.println("dictionary file has been read.");
-        //for the future loop through input file to read multiple boards
-        solver.readBoard();
-        System.out.println("board has been read");
-
         AI ai = new AI(new Player());
+
+        //for the future loop through input file to read multiple boards
+        while()
+        solver.readBoards();
+        System.out.println("board has been read");
+        solver.printBoard(solver.boardSpaces);
+
+
         ai.setTrie(solver.trie);
         ai.setBoard(solver.boardSpaces);
         ai.setTray(solver.tray);
@@ -117,8 +131,10 @@ public class Solver {
         Move newMove = null;
         if(solver.boardIsEmpty(solver.boardSpaces)) { newMove = ai.makeFirstMove(); } //this'll be problematic with smaller boards atm
         else { newMove = ai.makeSubsequentMove();}
-        System.out.println("move made");
+        solver.printBoard(ai.boardSpaces);
+        System.out.println("move returned");
         BoardSpace[][] newBoard = newMove.execute(solver.boardSpaces);
+        System.out.println("move executed");
         solver.printBoard(newBoard);
     }
 }

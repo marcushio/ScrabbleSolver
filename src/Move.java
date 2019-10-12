@@ -25,6 +25,15 @@ public class Move {
         this.anchor = null;
     }
 
+    public Move(ArrayList<Tile> tiles, int startRow, int startCol, boolean across, Player player) {
+        this.tiles = tiles;
+        this.startRow = startRow;
+        this.startCol = startCol;
+        this.across = across;
+        this.player = player;
+        this.anchor = null;
+    }
+
     public Move(ArrayList<Tile> tiles, int startRow, int startCol, boolean across, int score, Player player, Anchor anchor) {
         this.tiles = tiles;
         this.startRow = startRow;
