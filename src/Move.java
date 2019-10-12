@@ -10,7 +10,7 @@ public class Move {
     private ArrayList<Tile> tiles;
     private int startRow;
     private int startCol;
-    boolean across;
+    private boolean across;
     int score;
     Player player;
     Anchor anchor;
@@ -37,12 +37,24 @@ public class Move {
 
     public boolean isAcross(){ return across; }
 
-    void execute(Tile[][] boardArray){
+    public int getStartCol() {
+        return startCol;
+    }
+
+    public int getStartRow() {
+        return startRow;
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
+    }
+
+    public BoardSpace[][] execute(BoardSpace[][] boardArray){
         int row = startRow;
         int col = startCol;
 
         for (Tile tile: tiles){
-            boardArray[row][col] = tile;
+            boardArray[row][col].addTile(tile);
             if (across){
                 col++;
             } else {
@@ -50,11 +62,8 @@ public class Move {
             }
             player.removeTrayTile(tile);
         }
-        //player.awardPoints(score);
-        //HumanMove.execute(player);
-        player.fillTray();
+        return boardArray;
     }
-
-    //maybe i oughta make a to string for readability?
+    //maybe i oughta make a toString for readability?
 
 }

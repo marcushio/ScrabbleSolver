@@ -15,6 +15,7 @@ public class BoardSpace {
     private int multiplyBy;
     private MultiplierType multiplierType;
     private int rowIndex, colIndex;
+    private String stringRep;
 
     /**
      * We construct the space based off the String read in from standard input.
@@ -26,7 +27,9 @@ public class BoardSpace {
         info = new HashMap<String, Integer>(Constants.letterPoints);
         if(textSpace.length() < 2) {
             tile = new Tile(textSpace, info.get(textSpace));
+            stringRep = " " + textSpace;
         } else if (textSpace.length() == 2) {
+            stringRep = textSpace;
             if (textSpace.charAt(0) != '.') {
                 multiplyBy = Integer.parseInt(textSpace.substring(0, 1));
                 multiplierType = MultiplierType.WORD;
@@ -40,7 +43,13 @@ public class BoardSpace {
         }
     }
 
+    /**
+     * constructor for a blank space on the board
+     * @param row
+     * @param column
+     */
     public BoardSpace(int row, int column){
+        stringRep = "..";
         multiplyBy = 1;
         tile = null;
         multiplierType = MultiplierType.NONE;
@@ -57,6 +66,11 @@ public class BoardSpace {
         return false;
     }
 
+    public void addTile(Tile tile){
+        this.tile = tile;
+        stringRep = " " + tile.getLetter();
+    }
+
     public Tile getTile(){ return tile; }
 
     public int getMultiplyBy() { return multiplyBy; }
@@ -66,4 +80,9 @@ public class BoardSpace {
     public int getRowIndex() { return rowIndex; }
 
     public int getColIndex() { return colIndex; }
+
+    @Override
+    public String toString(){
+        return stringRep;
+    }
 }

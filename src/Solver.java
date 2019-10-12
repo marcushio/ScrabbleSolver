@@ -93,10 +93,19 @@ public class Solver {
         return true;
     }
 
+    public void printBoard(BoardSpace[][] board){
+        for(BoardSpace[] row: board){
+            System.out.println();
+            for(BoardSpace space: row)
+                System.out.print(space.toString() + " ");
+        }
+    }
+
     public static void main(String[] args){
         Constants constantValues = new Constants();
         Solver solver = new Solver(args[0]);
         System.out.println("dictionary file has been read.");
+        //for the future loop through input file to read multiple boards
         solver.readBoard();
         System.out.println("board has been read");
 
@@ -105,10 +114,11 @@ public class Solver {
         ai.setBoard(solver.boardSpaces);
         ai.setTray(solver.tray);
 
-        if(solver.boardIsEmpty(solver.boardSpaces)) { Move move = ai.makeFirstMove(); } //this'll be problematic with smaller boards atm
-        else { Move move = ai.makeSubsequentMove();}
+        Move newMove = null;
+        if(solver.boardIsEmpty(solver.boardSpaces)) { newMove = ai.makeFirstMove(); } //this'll be problematic with smaller boards atm
+        else { newMove = ai.makeSubsequentMove();}
         System.out.println("move made");
-        //else
-        //ai.makeFirstMove();
+        BoardSpace[][] newBoard = newMove.execute(solver.boardSpaces);
+        solver.printBoard(newBoard);
     }
 }
