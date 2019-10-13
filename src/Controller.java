@@ -10,17 +10,30 @@ import java.util.Scanner;
  * Handles the logic of the game
  */
 public class Controller {
-    HashSet dictionary;
+    HashSet<String> dictionary;
+    AI ai;
+    Player human;
 
-    public Controller(HashSet dictionary){
+
+    public Controller(HashSet<String> dictionary, Trie trie ){
         this.dictionary = dictionary;
+        ai = new AI(trie);
+        this.human = new Player(); 
     }
+    public Controller(){}
 
     public class TileHandler implements EventHandler {
         @Override
         public void handle(Event event){
 
         }
+    }
+
+    public void setDictionary(HashSet<String> newDictionary){
+        this.dictionary = newDictionary;
+    }
+    public void setAITrie(Trie trie){
+        ai.setTrie(trie);
     }
 
 }

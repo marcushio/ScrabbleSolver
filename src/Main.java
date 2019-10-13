@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Scanner;
 
 /**
  * @author: Marcus Trujillo
@@ -25,59 +24,40 @@ public class Main extends Application {
      * Launches the program
      * @param args
      */
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) {
+        Constants.readTileInfo();
+        Constants.setDictionaryFilename(args[0]);
+        Constants.readStandardBoard();
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
-        info = new Constants(); 
-        board = readBoard(); //read board config and make new board for test
-        controller = new Controller(fillDictionary("sowpods.txt"));
+        board = new Board();
+        controller = new Controller();
+        readDictionary(Constants.dictionaryFilename);
         gui = new GUI(primaryStage, board, controller);
     }
 
-    private Board readBoard(){
-        BoardSpace[][] board = null;
-        Board newBoard = null;
-        try(Scanner scanner = new Scanner(System.in)){
-            String token = null;
-            System.out.println("Enter your board configuration");
-            int boardSize = Integer.parseInt(scanner.nextLine());
-            board = new BoardSpace[boardSize][boardSize];
-
-            for(int i = 0; i < boardSize; i++){
-                for(int j = 0; j < boardSize; j++){
-                    token = scanner.next();
-                    board[i][j] = new BoardSpace(token);
-                }
-            }
-            newBoard = new Board(boardSize, board);
-            String tray = scanner.next();
-            //printBoard(boardSize);
-            //System.out.println("Tray: " + tray);
-
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return newBoard;
-    }
-
     /**
-     * fills a hash set with valid words
+     * This reads in the dictionary of valid words in the scrabble game so that the solver has access to all the
+     * words and so there is a lookup dictionary to check if a player's words are valid.
+     * @param filename
      */
-    private HashSet<String> fillDictionary(String filename) {
-        HashSet<String> dictionary = new HashSet<String>();
+    private void readDictionary(String filename) {
+        HashSet<String> dict = new HashSet<String>();
+        Trie trie = new Trie();
         String word = null;
         try (BufferedReader fileReader = new BufferedReader(new FileReader("res" + File.separator +  filename))) {
             while ((word = fileReader.readLine()) != null) {
-                dictionary.add(word);
+                dict.add(word);
+                trie.addWord(word);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return dictionary;
+        controller.setDictionary(dict);
+        controller.setAITrie(trie);
     }
-
-
-
 }

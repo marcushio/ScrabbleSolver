@@ -16,6 +16,10 @@ public class AI{
     public AI(Player bot) {
         this.bot = bot;
     }
+    public AI(Trie trie) {
+        this.bot = new Player();
+        this.trie = trie;
+    }
 
     public Move makeFirstMove(){
         bestWord = new ArrayList<>();

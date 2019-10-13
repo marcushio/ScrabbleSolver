@@ -12,6 +12,9 @@ public class Board extends Observable {
     private int size;
     private BoardSpace[][] boardSpaces;
 
+    /**
+     * this constructor is meant just for standard boards
+     */
     public Board(){
         boardSpaces = new BoardSpace[Constants.BOARD_DIMENSIONS][Constants.BOARD_DIMENSIONS];
         for(int i = 0; i < Constants.BOARD_DIMENSIONS; i++){
@@ -29,17 +32,6 @@ public class Board extends Observable {
     public Board(int size, BoardSpace[][] board){
         this.size = size;
         this.boardSpaces = board;
-        /*
-        playableLetters = new ArrayList<Tile>();
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < size; j++){
-                if( ! board[i][j].isEmpty() ) {
-                    playableLetters.add( board[i][j].getTile() ) ;
-                    //iterate through and see which are playable in which direction
-                }
-            }
-        }
-         */
     }
 
     //this is just for debugging go ahead and delete this later
@@ -68,7 +60,7 @@ public class Board extends Observable {
         return boardSpaces[row][column];
     }
 
-    public Tile[][] getBoard(){ return board;}
+    public BoardSpace[][] getBoard(){ return boardSpaces;}
 
     public BoardSpace[][] getBoardSpaces(){ return boardSpaces; }
 }
