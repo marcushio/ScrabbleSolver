@@ -18,9 +18,8 @@ public class Controller {
     public Controller(HashSet<String> dictionary, Trie trie ){
         this.dictionary = dictionary;
         ai = new AI(trie);
-        this.human = new Player(); 
+        this.human = new Player();
     }
-    public Controller(){}
 
     public class TileHandler implements EventHandler {
         @Override

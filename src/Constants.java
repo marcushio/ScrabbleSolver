@@ -25,8 +25,8 @@ public class Constants {
     public static final String doubleScore = "Double\n";
     public static final String LETTER = "Letter\n";
     public static final String WORD = "Word\n";
-    public static final int TILE_WIDTH = 40;
-    public static final int TILE_HEIGHT = 40;
+    public static final int TILE_WIDTH = 50;
+    public static final int TILE_HEIGHT = 50;
     //public static Map<Tile, Integer> tileFrequencies = new HashMap<Tile, Integer>() ; //tile prototypes maps a tile to it's frequency
     public static Map<String, Integer> tileFrequencies = new HashMap<String, Integer>();
     public static Map<String, Integer> letterPoints = new HashMap<String, Integer>();

@@ -16,14 +16,18 @@ public class Board extends Observable {
      * this constructor is meant just for standard boards
      */
     public Board(){
-        boardSpaces = new BoardSpace[Constants.BOARD_DIMENSIONS][Constants.BOARD_DIMENSIONS];
+        boardSpaces = Constants.standardBoard;
+        this.size = 15;
+        /*
         for(int i = 0; i < Constants.BOARD_DIMENSIONS; i++){
             for(int j = 0; j < Constants.BOARD_DIMENSIONS; j++){
                 boardSpaces[i][j] = new BoardSpace(i, j);
             }
         }
-    }
 
+         */
+    }
+//i don't think this is going to be used you might end up deleting this
     public Board(int size){
         this.size = size;
         boardSpaces = new BoardSpace[size][size];
@@ -32,15 +36,6 @@ public class Board extends Observable {
     public Board(int size, BoardSpace[][] board){
         this.size = size;
         this.boardSpaces = board;
-    }
-
-    //this is just for debugging go ahead and delete this later
-    private void printBoard(int boardSize){
-        for(int i = 0; i < boardSize; i++){
-            for(int j = 0; j < boardSize; j++){
-                System.out.println(boardSpaces[i][j]);
-            }
-        }
     }
 
     //Getters and Setters live below this line

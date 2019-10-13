@@ -19,6 +19,8 @@ public class Main extends Application {
     GUI gui;
     Controller controller;
     Board board;
+    Trie trie;
+    HashSet<String> dict;
 
     /**
      * Launches the program
@@ -34,10 +36,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
-        board = new Board();
-        controller = new Controller();
         readDictionary(Constants.dictionaryFilename);
+        board = new Board();
+        controller = new Controller(dict, trie);
         gui = new GUI(primaryStage, board, controller);
+        board.addObserver(gui);
     }
 
     /**
@@ -46,8 +49,8 @@ public class Main extends Application {
      * @param filename
      */
     private void readDictionary(String filename) {
-        HashSet<String> dict = new HashSet<String>();
-        Trie trie = new Trie();
+        dict = new HashSet<String>();
+        trie = new Trie();
         String word = null;
         try (BufferedReader fileReader = new BufferedReader(new FileReader("res" + File.separator +  filename))) {
             while ((word = fileReader.readLine()) != null) {
@@ -57,7 +60,5 @@ public class Main extends Application {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        controller.setDictionary(dict);
-        controller.setAITrie(trie);
     }
 }
