@@ -16,9 +16,9 @@ public class Model  extends Observable {
 
     public Model(){
         board = new Board(); //make a standard size board
-        player = new Player();
-        bot = new Player();
         tilePool = new TilePool();
+        player = new Player(tilePool);
+        bot = new Player();
     }
 
     public List<Tile> getHumanTray(){ return player.getTray(); }

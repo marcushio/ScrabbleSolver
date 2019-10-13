@@ -11,6 +11,7 @@ public class DisplayTile extends Canvas {
     int NUM_YSTART = 15, NUM_XSTART = 25;
 
     public DisplayTile(Tile tile, Controller controller){
+        setWidth(Constants.TILE_WIDTH); setHeight(Constants.TILE_HEIGHT);
         GraphicsContext gc = this.getGraphicsContext2D();
         gc.setStroke(Color.BLACK);
         if(tile.isSelected()) {

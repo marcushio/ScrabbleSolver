@@ -58,6 +58,8 @@ public class Move {
         return tiles;
     }
 
+    //should add a proper player's move isValid
+
     public boolean isValid(BoardSpace[][] boardArray){
         int row = startRow;
         int col = startCol;

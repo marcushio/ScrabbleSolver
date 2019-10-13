@@ -29,7 +29,7 @@ public class GUI implements Observer {
 
     public GUI(Stage primaryStage, Model model, Controller controller ){
         root = new VBox();
-
+        this.controller = controller;
         playArea = new HBox();
             boardArea= paintNewGrid(Constants.BOARD_DIMENSIONS, model.getBoard(), controller);
             scoreboard = new VBox();
@@ -38,7 +38,7 @@ public class GUI implements Observer {
                 scoreboard.getChildren().addAll(humanScore, botScore);
         playArea.getChildren().addAll(boardArea, scoreboard);
         playerTray = fillPlayerTray(model);
-        root.getChildren().addAll(playArea, playerTray);
+        root.getChildren().addAll(playArea, new Text("\t\t\t\t\t\t\t\tPLAYERS TRAY"), playerTray);
         primaryStage.setTitle("SCRA-SCRA-SCRABBLE");
         primaryStage.setScene(new Scene(root, 900, 830));
         primaryStage.show();
@@ -57,7 +57,6 @@ public class GUI implements Observer {
         for(int i = 0; i < size; i++){
             for(int j= 0; j < size; j++) {
                 DisplaySquare tempCanvas = new DisplaySquare(board.getSpaceAt(i,j), controller);
-
                 tempCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new TileHandler() );
                 grid.getChildren().add(tempCanvas);
             }
@@ -70,6 +69,7 @@ public class GUI implements Observer {
      */
     private HBox fillPlayerTray(Model model){
         HBox displayTray = new HBox();
+        displayTray.getChildren().add(new Text("   \t\t                "));
         for (Tile tile : model.getHumanTray() ) {
             displayTray.getChildren().add(new DisplayTile(tile, controller));
         }

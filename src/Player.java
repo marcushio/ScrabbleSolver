@@ -9,7 +9,12 @@ import java.util.List;
 public class Player {
     private List<Tile> tray = new ArrayList<Tile>();
     private int score = 0;
+
+    /**
+     * This "dummy" constructor ends up being used when testing the solver and you don't really need a player.
+     */
     public Player(){};
+
     /**
     *
     */
@@ -21,7 +26,7 @@ public class Player {
      * @param sock
      */
     public void fillTray(TilePool sock){
-        while (tray.size() <= Constants.TRAY_SIZE ){
+        while (tray.size() < Constants.TRAY_SIZE ){
             tray.add(sock.takeOutTile());
         }
     }
