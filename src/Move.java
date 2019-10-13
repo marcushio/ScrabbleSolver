@@ -95,6 +95,13 @@ public class Move {
         }
         return boardArray;
     }
-    //maybe i oughta make a toString for readability?
+
+    public String getWord(){
+        String word = "";
+        for(Tile tile: tiles){
+            word += tile.letter;
+        }
+        return word;
+    }
 
 }

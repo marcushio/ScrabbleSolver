@@ -317,4 +317,5 @@ public class AI{
     }
 
     public void setTray(ArrayList<Tile> newTray){ this.tray = newTray; }
+    public ArrayList<Tile> getTray(){ return tray; }
 }

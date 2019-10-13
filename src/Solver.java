@@ -141,9 +141,13 @@ public class Solver {
         for(BoardConfig config : boardConfigs) {
             constantValues.setBoardDimensions(config.getSize());
             ai.setBoard(config.getBoard());
-            System.out.println("\nThis is what we just set the ai's board to");
+            System.out.println("\nInput Board");
             solver.printBoard(ai.boardSpaces);
             ai.setTray(config.getTray());
+            System.out.print("\nTray: ");
+            for(Tile tile : ai.getTray()){
+                System.out.print(tile.letter);
+            }
             Move newMove = null;
             if (solver.boardIsEmpty(config.getBoard())) {
                 newMove = ai.makeFirstMove();
@@ -151,11 +155,11 @@ public class Solver {
             else {
                 newMove = ai.makeSubsequentMove();
             }
-            System.out.println("\nmove returned... now executing");
+            System.out.println("\nmove returned... AI played "+ newMove.getWord() + " for " + Scorer.score(newMove, ai.boardSpaces));
             if(newMove == null) {System.out.println("Couldn't find a move... I'm  sorry");}
             else {
                 BoardSpace[][] newBoard = newMove.execute(config.getBoard());
-                System.out.println("move executed... here's the new board configuratoin");
+                System.out.println("move executed... here's the new board configuration");
                 solver.printBoard(newBoard);
             }
         }
