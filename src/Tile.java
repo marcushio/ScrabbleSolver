@@ -5,6 +5,7 @@
  */
 public class Tile {
     String letter;
+    boolean isSelected;
     public int pointValue;
 
     public Tile(String letter, int pointValue){
@@ -23,4 +24,6 @@ public class Tile {
      * @return the point value you get for playing this letter
      */
     public int getPointValue() { return pointValue; }
+
+    public boolean isSelected(){ return isSelected; }
 }

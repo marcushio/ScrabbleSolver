@@ -16,6 +16,7 @@ public class BoardSpace {
     private MultiplierType multiplierType;
     private int rowIndex, colIndex;
     private String stringRep;
+    private boolean isSelected;
 
     /**
      * We construct the space based off the String read in from standard input.
@@ -91,6 +92,8 @@ public class BoardSpace {
     public int getRowIndex() { return rowIndex; }
 
     public int getColIndex() { return colIndex; }
+
+    public boolean isSelected(){ return isSelected; }
 
     @Override
     public String toString(){

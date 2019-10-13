@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Observable;
@@ -18,25 +19,29 @@ import java.util.Scanner;
  * @version: brief class description
  */
 public class GUI implements Observer {
-    private TilePane playArea;
+    private HBox playArea;
+    private VBox scoreboard;
+    private TilePane boardArea;
     private Canvas computerTray;
     private HBox playerTray;
     private VBox root;
+    private Text humanScore;
+    private Text botScore;
 
     public GUI(Stage primaryStage, Board model, Controller controller ){
         root = new VBox();
 
-        computerTray = new Canvas(200, 40);
-        GraphicsContext gc = computerTray.getGraphicsContext2D();
-        gc.setStroke(Color.BLACK);
-        gc.strokeRect(0,0,200,40);
-
-        //playArea = new TilePane();
-        playArea = paintNewGrid(model.getSize(), model, controller);
+        playArea = new HBox();
+            boardArea= paintNewGrid(model.getSize(), model, controller);
+            scoreboard = new VBox();
+                humanScore = new Text("Your Score: 0" );
+                botScore = new Text("Bot Score: 0");
+                scoreboard.getChildren().addAll(humanScore, botScore);
+        playArea.getChildren().addAll(boardArea, scoreboard);
         playerTray = new HBox();
-        root.getChildren().addAll(computerTray, playArea, playerTray);
+        root.getChildren().addAll(playArea, playerTray);
         primaryStage.setTitle("SCRA-SCRA-SCRABBLE");
-        primaryStage.setScene(new Scene(root, 600, 550));
+        primaryStage.setScene(new Scene(root, 900, 820));
         primaryStage.show();
     }
 
@@ -52,7 +57,7 @@ public class GUI implements Observer {
 
         for(int i = 0; i < size; i++){
             for(int j= 0; j < size; j++) {
-                DisplayTile tempCanvas = new DisplayTile(board.getSpaceAt(i,j));
+                DisplayTile tempCanvas = new DisplayTile(board.getSpaceAt(i,j), controller);
 
                 tempCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new TileHandler() );
                 grid.getChildren().add(tempCanvas);
