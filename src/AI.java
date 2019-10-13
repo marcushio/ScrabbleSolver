@@ -117,7 +117,7 @@ public class AI{
                                 currentWordScore += 50;
                             }
 
-                            if (maxScore < currentWordScore){
+                            if (maxScore < currentWordScore && move.isValid(boardSpaces) ){ //the move.isValid is my hack to fix a bug... look to improve
                                 maxScore =  currentWordScore;
                                 bestWord = tilesInWord;
                                 currentAnchor = anchor;
@@ -230,13 +230,13 @@ public class AI{
                     } else {
                         //if only one then we need to do additional checks
                         if (col - startCol > 0){
-                            if (col < Constants.BOARD_DIMENSIONS - 1 && boardSpaces[row][col + 1].getTile() != (null)){  // words that can only go left I need to readd this later. 
-                                //anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), col - startCol, endCol - col , true));
+                            if (col < Constants.BOARD_DIMENSIONS - 1 && boardSpaces[row][col + 1].getTile() != (null)){  // words that can only go left I need to readd this later.
+                                anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), col - startCol, endCol - col , true));
                             }
                         }
                         if (endCol - col > 0){
                             if (col > 0 && boardSpaces[row][col - 1 ].getTile() != (null)){ // words that can only go right
-                                anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), col - startCol, endCol - col , true));
+                               anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), col - startCol, endCol - col , true));
                             }
                         }
                     }
@@ -292,7 +292,7 @@ public class AI{
                     } else{//if only one then we need to do additional checks
                         if (row - startRow > 0){ //words that can only go up I'm not using these yet because It's been causing bugs but I should fix this
                             if (row < Constants.BOARD_DIMENSIONS-1 && boardSpaces[row+1][col].getTile() == (null)){
-                                //anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), row - startRow, endRow - row, false));
+                                anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), row - startRow, endRow - row, false));
                             }
                         }
                         if (endRow - row > 0){ //words that can only go down

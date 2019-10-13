@@ -152,9 +152,12 @@ public class Solver {
                 newMove = ai.makeSubsequentMove();
             }
             System.out.println("\nmove returned... now executing");
-            BoardSpace[][] newBoard = newMove.execute(config.getBoard());
-            System.out.println("move executed... here's the new board configuratoin");
-            solver.printBoard(newBoard);
+            if(newMove == null) {System.out.println("Couldn't find a move... I'm  sorry");}
+            else {
+                BoardSpace[][] newBoard = newMove.execute(config.getBoard());
+                System.out.println("move executed... here's the new board configuratoin");
+                solver.printBoard(newBoard);
+            }
         }
     }
 }
