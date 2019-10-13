@@ -4,18 +4,18 @@ import java.util.Random;
 /**
  * @author: Marcus Trujillo
  * @version:
- * brief class description
+ * Represents the pool of tiles that we can pull from when our tray of tiles isn't full
  */
 
 public class TilePool {
     ArrayList<Tile> tileSet;
 
-    private static final TilePool instance;
-    static{ instance = new TilePool(); }
-
-    public static TilePool getInstance(){ return instance; }
-
-    public TilePool(){tileSet = new ArrayList<Tile>(); }
+    public TilePool(){
+        tileSet = new ArrayList<Tile>();
+        for(Map.Entry<String, Integer> entry : Constants.tileFrequencies.entrySet()){
+            addMultipleTiles(entry.getKey(), Constants.letterPoints.get(entry.getKey()), entry.getValue());
+        }
+    }
 
     public TilePool(ArrayList<Tile> tileSet){
         this.tileSet = tileSet;
@@ -44,6 +44,11 @@ public class TilePool {
 
     boolean isEmpty(){
         return (tileSet.size() == 0);
+    }
+
+    public static void main(String[] args){
+        Constants c = new Constants();
+        TilePool testPool = new TilePool();
     }
 
 }

@@ -18,6 +18,7 @@ public class Main extends Application {
     Constants info;
     GUI gui;
     Controller controller;
+    Model model;
     Board board;
     Trie trie;
     HashSet<String> dict;
@@ -37,10 +38,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
         readDictionary(Constants.dictionaryFilename);
-        board = new Board();
+        model = new Model();
         controller = new Controller(dict, trie);
         gui = new GUI(primaryStage, board, controller);
-        board.addObserver(gui);
+        model.addObserver(gui);
     }
 
     /**

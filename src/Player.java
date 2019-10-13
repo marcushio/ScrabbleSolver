@@ -15,9 +15,9 @@ public class Player {
     }
 
     public void fillTray(){
-        while (tray.size() <= 7 ){
-            TilePool sock = TilePool.getInstance();
-            tray.add(sock.takeOutTile());
+        while (tray.size() <= Constants.TRAY_SIZE ){
+            //TilePool sock = TilePool.getInstance();
+            //tray.add(sock.takeOutTile());
         }
     }
 

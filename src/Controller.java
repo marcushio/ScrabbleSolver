@@ -21,10 +21,17 @@ public class Controller {
         this.human = new Player();
     }
 
+    public class SpaceHandler implements EventHandler {
+        @Override
+        public void handle(Event event){
+            //code to handle a space being clicked
+        }
+    }
+
     public class TileHandler implements EventHandler {
         @Override
         public void handle(Event event){
-
+            //code to handle a tile being clicked
         }
     }
 

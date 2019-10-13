@@ -35,9 +35,7 @@ public class AI{
 
     public void refillTray(){
         while (tray.size() < Constants.TRAY_SIZE){
-            Tile newTile = TilePool.getInstance().takeOutTile();
-            if (newTile == null){ return; }
-            tray.add(newTile);
+
         }
     }
 

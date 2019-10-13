@@ -8,25 +8,19 @@ import java.util.Observable;
  * represents the board we're playing off of.
  * I think for the sake of ease later, it would make sense to have two playable lists. One for up, and one for down.
  */
-public class Board extends Observable {
+public class Board{
     private int size;
     private BoardSpace[][] boardSpaces;
 
     /**
-     * this constructor is meant just for standard boards
+     * this constructor is meant for standard boards
      */
     public Board(){
-        boardSpaces = Constants.standardBoard;
+        boardSpaces = Constants.standardBoard; //need to get this from Constants because a standard board is read in from file
         this.size = 15;
-        /*
-        for(int i = 0; i < Constants.BOARD_DIMENSIONS; i++){
-            for(int j = 0; j < Constants.BOARD_DIMENSIONS; j++){
-                boardSpaces[i][j] = new BoardSpace(i, j);
-            }
-        }
-
-         */
+        Constants.setBoardDimensions(15);
     }
+
 //i don't think this is going to be used you might end up deleting this
     public Board(int size){
         this.size = size;

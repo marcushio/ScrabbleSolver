@@ -1,12 +1,9 @@
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -57,7 +54,7 @@ public class GUI implements Observer {
 
         for(int i = 0; i < size; i++){
             for(int j= 0; j < size; j++) {
-                DisplayTile tempCanvas = new DisplayTile(board.getSpaceAt(i,j), controller);
+                DisplaySquare tempCanvas = new DisplaySquare(board.getSpaceAt(i,j), controller);
 
                 tempCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new TileHandler() );
                 grid.getChildren().add(tempCanvas);

@@ -4,8 +4,8 @@
  * Represents a scrabble letter tile that can be played on the board.
  */
 public class Tile {
-    String letter;
-    boolean isSelected;
+    public String letter;
+    private boolean isSelected;
     public int pointValue;
 
     public Tile(String letter, int pointValue){
