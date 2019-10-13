@@ -1,9 +1,11 @@
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -16,29 +18,29 @@ import java.util.Scanner;
  * @version: brief class description
  */
 public class GUI implements Observer {
+    private Controller controller;
     private HBox playArea;
     private VBox scoreboard;
     private TilePane boardArea;
-    private Canvas computerTray;
     private HBox playerTray;
     private VBox root;
     private Text humanScore;
     private Text botScore;
 
-    public GUI(Stage primaryStage, Board model, Controller controller ){
+    public GUI(Stage primaryStage, Model model, Controller controller ){
         root = new VBox();
 
         playArea = new HBox();
-            boardArea= paintNewGrid(model.getSize(), model, controller);
+            boardArea= paintNewGrid(Constants.BOARD_DIMENSIONS, model.getBoard(), controller);
             scoreboard = new VBox();
                 humanScore = new Text("Your Score: 0" );
                 botScore = new Text("Bot Score: 0");
                 scoreboard.getChildren().addAll(humanScore, botScore);
         playArea.getChildren().addAll(boardArea, scoreboard);
-        playerTray = new HBox();
+        playerTray = fillPlayerTray(model);
         root.getChildren().addAll(playArea, playerTray);
         primaryStage.setTitle("SCRA-SCRA-SCRABBLE");
-        primaryStage.setScene(new Scene(root, 900, 820));
+        primaryStage.setScene(new Scene(root, 900, 830));
         primaryStage.show();
     }
 
@@ -61,6 +63,24 @@ public class GUI implements Observer {
             }
         }
         return grid;
+    }
+
+    /**
+     * Fills the player's display tray based on player's tray in the model
+     */
+    private HBox fillPlayerTray(Model model){
+        HBox displayTray = new HBox();
+        for (Tile tile : model.getHumanTray() ) {
+            displayTray.getChildren().add(new DisplayTile(tile, controller));
+        }
+        if(model.getHumanTray().isEmpty()){
+            //add an empty rect if this is empty so it doens't screw up the disp
+            Canvas emptyTray = new Canvas();
+            GraphicsContext gc = emptyTray.getGraphicsContext2D();
+            gc.setStroke(Color.BLACK); gc.strokeRect(0,0,350, 50);
+            displayTray.getChildren().add(emptyTray);
+        }
+        return displayTray;
     }
 
     /**

@@ -40,7 +40,7 @@ public class Main extends Application {
         readDictionary(Constants.dictionaryFilename);
         model = new Model();
         controller = new Controller(dict, trie);
-        gui = new GUI(primaryStage, board, controller);
+        gui = new GUI(primaryStage, model, controller);
         model.addObserver(gui);
     }
 

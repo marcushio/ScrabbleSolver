@@ -106,10 +106,6 @@ public class AI{
                 if (tilesToBeUsed.contains(anchor.anchorTile) || currentTile.equals(anchor.anchorTile)){
                     if (isValidWord(currentWord + currentTile.letter)){
                         if (fitsOnBoard(anchor, tilesInWord)){
-                            //^^ all that means we now have a valid possible solution check its score here...
-                            //
-                            //public Anchor(int row, int col, Tile anchorTile, int prefixCap, int postfixCap, boolean across) need these two as references for now
-                            //move = new Move(tilesInWord , startRow , startCol , anchor.isAcross(), bot);
                             Move move = null; //let's make our move to score
                             if(anchor.isAcross()){ //make a move to check score bases on anchor being across type
                                 move = new Move(tilesInWord,  anchor.row , (anchor.col - getAnchorPosition(anchor, tilesInWord)), true, bot );
@@ -234,8 +230,8 @@ public class AI{
                     } else {
                         //if only one then we need to do additional checks
                         if (col - startCol > 0){
-                            if (col < Constants.BOARD_DIMENSIONS - 1 && boardSpaces[row][col + 1].getTile() != (null)){  // words that can only go left
-                                anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), col - startCol, endCol - col , true));
+                            if (col < Constants.BOARD_DIMENSIONS - 1 && boardSpaces[row][col + 1].getTile() != (null)){  // words that can only go left I need to readd this later. 
+                                //anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), col - startCol, endCol - col , true));
                             }
                         }
                         if (endCol - col > 0){
@@ -294,9 +290,9 @@ public class AI{
                     if (row - startRow > 0 && endRow - row > 0){
                         anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), row - startRow, endRow - row, false));
                     } else{//if only one then we need to do additional checks
-                        if (row - startRow > 0){ //words that can only go up
+                        if (row - startRow > 0){ //words that can only go up I'm not using these yet because It's been causing bugs but I should fix this
                             if (row < Constants.BOARD_DIMENSIONS-1 && boardSpaces[row+1][col].getTile() == (null)){
-                                anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), row - startRow, endRow - row, false));
+                                //anchors.add(new Anchor(row, col, boardSpaces[row][col].getTile(), row - startRow, endRow - row, false));
                             }
                         }
                         if (endRow - row > 0){ //words that can only go down

@@ -21,6 +21,10 @@ public class Model  extends Observable {
         tilePool = new TilePool();
     }
 
+    public List<Tile> getHumanTray(){ return player.getTray(); }
+
+    public Board getBoard(){ return board; }
+
 
     /** pretty sure this is not model's job, that belongs to constants, prep this for deletion
      * fills the collection of tiles that can be drawn by reading from a file that contains all inforamation about

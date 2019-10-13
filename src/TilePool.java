@@ -3,7 +3,7 @@ import java.util.Map;
 import java.util.Random;
 /**
  * @author: Marcus Trujillo
- * @version:
+ * @version: 10/13/2019
  * Represents the pool of tiles that we can pull from when our tray of tiles isn't full
  */
 
@@ -45,10 +45,4 @@ public class TilePool {
     boolean isEmpty(){
         return (tileSet.size() == 0);
     }
-
-    public static void main(String[] args){
-        Constants c = new Constants();
-        TilePool testPool = new TilePool();
-    }
-
 }
