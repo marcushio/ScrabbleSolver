@@ -9,8 +9,12 @@ import javafx.scene.paint.Color;
  */
 public class DisplayTile extends Canvas {
     int NUM_YSTART = 15, NUM_XSTART = 25;
+    private boolean isSelected;
+    private Tile tile;
 
     public DisplayTile(Tile tile, Controller controller){
+        isSelected = false;
+        this.tile = tile;
         setWidth(Constants.TILE_WIDTH); setHeight(Constants.TILE_HEIGHT);
         GraphicsContext gc = this.getGraphicsContext2D();
         gc.setStroke(Color.BLACK);
@@ -21,5 +25,14 @@ public class DisplayTile extends Canvas {
 
         gc.strokeText(tile.getLetter(), NUM_XSTART, NUM_YSTART);
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new TileHandler());
+    }
+
+    public boolean isSelected(){ return isSelected; }
+
+    public Tile getTile(){return tile; }
+
+    public void select(){
+        isSelected = true;
+        tile.setSelected(true);
     }
 }

@@ -117,7 +117,7 @@ public class AI{
                                 currentWordScore += 50;
                             }
 
-                            if (maxScore < currentWordScore && move.isValid(boardSpaces) ){ //the move.isValid is my hack to fix a bug... look to improve
+                            if (maxScore < currentWordScore && moveIsValid(move) ){ //the move.isValid is my hack to fix a bug... look to improve
                                 maxScore =  currentWordScore;
                                 bestWord = tilesInWord;
                                 currentAnchor = anchor;
@@ -129,7 +129,54 @@ public class AI{
         }
     }
 
-    boolean isValidPrefix(String prefix){
+    private boolean moveIsValid(Move move){
+        BoardSpace[][] boardCopy = new BoardSpace[Constants.BOARD_DIMENSIONS][Constants.BOARD_DIMENSIONS];
+        for(int i = 0; i < Constants.BOARD_DIMENSIONS; i++){
+            for(int j = 0; j < Constants.BOARD_DIMENSIONS; j++){
+                boardCopy[i][j] = new BoardSpace(boardSpaces[i][j]);
+            }
+        }
+        int row = move.getStartRow();
+        int col = move.getStartCol();
+        String ourWord = "";
+        String currentWord = "";
+        for (Tile tile: move.getTiles()){
+            ourWord += tile.getLetter();
+            if (move.isAcross()){
+                col++;
+            } else {
+                row++;
+            }
+        }
+        currentWord = ourWord;
+        if(move.isAcross()){
+         //check if we keep going right we invalidate the word
+            while(col+1 < boardCopy.length && !boardCopy[row][++col].isEmpty() ){
+               if( isValidWord(currentWord += boardCopy[row][col].getTile().getLetter()) == false ) return false;
+            }
+            //check if we keep going left we invalidate the word
+            col = move.getStartCol();
+            currentWord = ourWord;
+            while(col-1 >= 0 && !boardCopy[row][--col].isEmpty() ){
+               if(!isValidWord( currentWord = boardCopy[row][col].getTile().getLetter() + currentWord ) ) return false;
+            }
+        } else if(!move.isAcross()){
+            row = move.getStartRow(); col = move.getStartCol();
+            currentWord = ourWord;
+            //check if we keep going down we invalidate the word;
+            while(row+1 < boardCopy.length && !boardCopy[++row][col].isEmpty()){
+                if( !isValidWord(currentWord += boardCopy[row][col].getTile().getLetter() )) return false;
+            }
+            row = move.getStartRow();
+            currentWord = ourWord;
+            while(row-1 >= 0 && !boardCopy[--row][col].isEmpty()){
+                if( !isValidWord( currentWord = boardCopy[row][col].getTile().getLetter() + currentWord  )) return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isValidPrefix(String prefix){
         if (trie.searchPrefix(prefix)){
             return true;
         } else {
@@ -137,7 +184,7 @@ public class AI{
         }
     }
 
-    boolean isValidWord(String word){
+    private boolean isValidWord(String word){
         if (trie.searchWord(word)){
             return true;
         } else {

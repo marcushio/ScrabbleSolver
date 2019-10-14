@@ -21,9 +21,27 @@ public class Model  extends Observable {
         bot = new Player();
     }
 
+    public void selectTileInTray(Tile tile){
+        List<Tile> trayCopy = player.getTray();
+        for(Tile trayTile : trayCopy){
+            if(trayTile == tile){
+                trayTile.setSelected(true);
+            }
+        }
+        setChanged();
+        notifyObservers();
+    }
+
     public List<Tile> getHumanTray(){ return player.getTray(); }
 
     public Board getBoard(){ return board; }
+
+    public int getPlayerScore(Player player){
+        return player.getScore();
+    }
+
+    public int getPlayerScore(){ return player.getScore(); }
+    public int getBotScore(){ return bot.getScore(); }
 
 
     /** pretty sure this is not model's job, that belongs to constants, prep this for deletion

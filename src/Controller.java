@@ -13,14 +13,25 @@ public class Controller {
     HashSet<String> dictionary;
     AI ai;
     Player human;
+    Model model;
 
-
-    public Controller(HashSet<String> dictionary, Trie trie ){
+    public Controller(HashSet<String> dictionary, Trie trie, Model model ){
         this.dictionary = dictionary;
         ai = new AI(trie);
         this.human = new Player();
+        this.model = model;
     }
 
+    public void addModel(Model newModel){ this.model = newModel; }
+    public void setDictionary(HashSet<String> newDictionary){
+        this.dictionary = newDictionary;
+    }
+    public void setAITrie(Trie trie){
+        ai.setTrie(trie);
+    }
+
+
+//Event handlers live below this line
     public class SpaceHandler implements EventHandler {
         @Override
         public void handle(Event event){
@@ -31,15 +42,22 @@ public class Controller {
     public class TileHandler implements EventHandler {
         @Override
         public void handle(Event event){
-            //code to handle a tile being clicked
+            DisplayTile displayTile = (DisplayTile) event.getSource();
+            model.selectTileInTray(displayTile.getTile());
         }
     }
 
-    public void setDictionary(HashSet<String> newDictionary){
-        this.dictionary = newDictionary;
-    }
-    public void setAITrie(Trie trie){
-        ai.setTrie(trie);
+    public class MoveButtonHandler implements EventHandler {
+        @Override
+        public void handle(Event event){
+            //code to handle a move
+        }
     }
 
+    public class ClearButtonHandler implements EventHandler {
+        @Override
+        public void handle(Event event){
+            //clear should reset things back to previous state before putting disp tiles onto board.
+        }
+    }
 }

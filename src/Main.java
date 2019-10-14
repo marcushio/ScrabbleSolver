@@ -1,6 +1,5 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -39,7 +38,7 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         readDictionary(Constants.dictionaryFilename);
         model = new Model();
-        controller = new Controller(dict, trie);
+        controller = new Controller(dict, trie, model);
         gui = new GUI(primaryStage, model, controller);
         model.addObserver(gui);
     }

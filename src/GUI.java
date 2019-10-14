@@ -1,6 +1,7 @@
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
@@ -29,18 +30,23 @@ public class GUI implements Observer {
 
     public GUI(Stage primaryStage, Model model, Controller controller ){
         root = new VBox();
+        playerTray = new HBox();
         this.controller = controller;
         playArea = new HBox();
-            boardArea= paintNewGrid(Constants.BOARD_DIMENSIONS, model.getBoard(), controller);
+            boardArea = paintNewGrid(Constants.BOARD_DIMENSIONS, model.getBoard(), controller);
             scoreboard = new VBox();
                 humanScore = new Text("Your Score: 0" );
                 botScore = new Text("Bot Score: 0");
+                Button moveButton = new Button();
+                moveButton.setOnAction(controller.new MoveButtonHandler());
                 scoreboard.getChildren().addAll(humanScore, botScore);
         playArea.getChildren().addAll(boardArea, scoreboard);
-        playerTray = fillPlayerTray(model);
+        drawPlayerTray(model);
         root.getChildren().addAll(playArea, new Text("\t\t\t\t\t\t\t\tPLAYERS TRAY"), playerTray);
         primaryStage.setTitle("SCRA-SCRA-SCRABBLE");
-        primaryStage.setScene(new Scene(root, 900, 830));
+        primaryStage.setScene(new Scene(root, 900, 835));
+        primaryStage.sizeToScene();
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
@@ -67,56 +73,37 @@ public class GUI implements Observer {
     /**
      * Fills the player's display tray based on player's tray in the model
      */
-    private HBox fillPlayerTray(Model model){
-        HBox displayTray = new HBox();
-        displayTray.getChildren().add(new Text("   \t\t                "));
+    private void drawPlayerTray(Model model){
+        playerTray.getChildren().clear();
+        playerTray.getChildren().add(new Text("   \t\t                "));
         for (Tile tile : model.getHumanTray() ) {
-            displayTray.getChildren().add(new DisplayTile(tile, controller));
+            DisplayTile newDisplayTile = new  DisplayTile(tile, controller);
+            if(tile.isSelected()){
+                GraphicsContext gc = newDisplayTile.getGraphicsContext2D();
+                gc.setFill(Color.BLUE);
+                gc.setStroke(Color.BLUE);
+                gc.strokeRect(2,2,Constants.TILE_WIDTH,Constants.TILE_HEIGHT);
+            }
+            playerTray.getChildren().add(newDisplayTile);
         }
         if(model.getHumanTray().isEmpty()){
             //add an empty rect if this is empty so it doens't screw up the disp
             Canvas emptyTray = new Canvas();
             GraphicsContext gc = emptyTray.getGraphicsContext2D();
             gc.setStroke(Color.BLACK); gc.strokeRect(0,0,350, 50);
-            displayTray.getChildren().add(emptyTray);
+            playerTray.getChildren().add(emptyTray);
         }
-        return displayTray;
     }
 
     /**
      * updates the UI based on the new information of the model
      */
     @Override
-    public void update(Observable o, Object arg) {
-
-    }
-
-    public static void main(String[] args){
-        BoardSpace boardSpaces[][] = null;
-        int boardSize = 0;
-        //read a board config
-        try(Scanner scanner = new Scanner(System.in)){
-            String token = null;
-            System.out.println("Enter your board configuration");
-            boardSize  = Integer.parseInt(scanner.nextLine());
-            boardSpaces = new BoardSpace[boardSize][boardSize];
-
-            for(int i = 0; i < boardSize; i++){
-                for(int j = 0; j < boardSize; j++){
-                    token = scanner.next();
-                    boardSpaces[i][j] = new BoardSpace(token);
-                }
-            }
-
-            String tray = scanner.next();
-            System.out.println("Tray: " + tray);
-
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        //make a new board based on config
-        Board  board = new Board(boardSize, boardSpaces );
-        //paint gui based on this
-
+    public void update(Observable model, Object arg) {
+        Model updatedModel = (Model) model;
+        drawPlayerTray(updatedModel);
+        boardArea = paintNewGrid(Constants.BOARD_DIMENSIONS, updatedModel.getBoard(), controller);
+        humanScore = new Text(updatedModel.getPlayerScore() + " ");
+        botScore = new Text(updatedModel.getBotScore() + " ");
     }
 }

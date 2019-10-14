@@ -61,7 +61,7 @@ public class Trie {
         wordCount++;
     }
 
-    public Boolean searchWord(String word) {
+    public boolean searchWord(String word) {
         if (word == null|| word == "") return false;
         Node current = root;
         for(int i=0; i < word.length(); i++){
@@ -69,7 +69,7 @@ public class Trie {
             HashMap<String, Node> children = current.children;
             if (children.containsKey(currentLetter)){
                 current = children.get(currentLetter);
-            }
+            } else return false;
         }
         if (current.children.containsKey(null)){
             return true;
@@ -78,7 +78,7 @@ public class Trie {
         }
     }
 
-    public Boolean searchPrefix(String word) {
+    public boolean searchPrefix(String word) {
         if (word == null) return false;
         Node cur = root;
         for(int i=0; i < word.length(); i++){

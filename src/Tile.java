@@ -5,7 +5,7 @@
  */
 public class Tile {
     public String letter;
-    private boolean isSelected;
+    private boolean isSelected = false;
     public int pointValue;
 
     public Tile(String letter, int pointValue){
@@ -26,4 +26,6 @@ public class Tile {
     public int getPointValue() { return pointValue; }
 
     public boolean isSelected(){ return isSelected; }
+
+    public void setSelected(boolean selected){ isSelected = selected; }
 }

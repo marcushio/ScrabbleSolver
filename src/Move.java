@@ -71,12 +71,11 @@ public class Move {
             } else {
                 row++;
             }
-            player.removeTrayTile(tile);
         }
         if(isAcross() && col+1 < boardArray.length && !boardArray[row][col +1].isEmpty()){ return false; } //these are a bit of a hack to fix the postfix bugs
-        if(!isAcross() && row+1 < boardArray.length && !boardArray[row +1][col].isEmpty()){ return true; } //if I find time I'll need a better soln.
-        if(isAcross() && startCol-1 >   0          && !boardArray[row][startCol -1].isEmpty()){ return false; }
-        if(!isAcross() && startRow-1 >     0  && !boardArray[startRow -1 ][col].isEmpty()){ return false; }
+        if(!isAcross() && row+1 < boardArray.length && !boardArray[row +1][col].isEmpty()){ return false; } //if I find time I'll need a better soln.
+        if(isAcross() && startCol-1 > 0 && !boardArray[row][startCol -1].isEmpty()){ return false; }
+        if(!isAcross() && startRow-1 > 0  && !boardArray[startRow -1 ][col].isEmpty()){ return false; }
         return true;
     }
 

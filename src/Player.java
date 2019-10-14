@@ -9,6 +9,8 @@ import java.util.List;
 public class Player {
     private List<Tile> tray = new ArrayList<Tile>();
     private int score = 0;
+    private int selectedTileIndex;
+
 
     /**
      * This "dummy" constructor ends up being used when testing the solver and you don't really need a player.
@@ -35,9 +37,18 @@ public class Player {
         tray.remove(tile);
     }
 
-    public void updateScore(int points){
+    public int updateScore(int points){
         score += points;
+        return score;
     }
+
+    public void setSelectedTile(int newIndex){
+        tray.get(selectedTileIndex).setSelected(false);
+        selectedTileIndex = newIndex;
+        tray.get(newIndex).setSelected(true);
+    }
+
+    public int getScore(){ return score; }
 
     public void removeTrayTile(Tile tile){
         tray.remove(tile);

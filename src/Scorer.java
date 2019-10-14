@@ -21,16 +21,6 @@ public class Scorer {
                 boardCopy[i][j] = new BoardSpace(board[i][j]);
             }
         }
-        /*
-        for(int i = 0; i < Constants.BOARD_DIMENSIONS; i++){
-            System.out.println();
-            for(int j = 0; j < Constants.BOARD_DIMENSIONS; j++){
-                System.out.print(boardCopy[i][j].toString() + " ");
-            }
-        }
-
-         */
-        //valid check goes here but for now we're not protecting... we'll get there
         int multiplyBy = 1; //make multiplier 1 by default (aka the multiplier doesn't change the value
         int row = move.getStartRow();
         int col = move.getStartCol();
