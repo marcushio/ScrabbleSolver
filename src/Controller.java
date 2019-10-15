@@ -39,34 +39,23 @@ public class Controller {
     public class SpaceHandler implements EventHandler {
         @Override
         public void handle(Event event){
-            DisplaySquare displaySpace = (DisplaySquare) event.getSource();
-            //selection logic
-            if(selectedSpace == null){//we don't have a selected space
-                if(selectedTile != null){ //put space and tile together
-                    paintTileOnSpace(selectedTile, displaySpace);
-                    displaySpace.setTile(selectedTile);
-                    System.out.println("Newly place tile on space is " + displaySpace.getTile().getTile().getLetter() );
-                    unpaintTrayTile(selectedTile) ; //is there a way to make unclickable
-                    selectedTile = null;
-                } else { //no selected tile to add
-                    GraphicsContext gc = displaySpace.getGraphicsContext2D();
-                    gc.setLineWidth(3);
-                    gc.setStroke(Color.CYAN);
-                    gc.strokeRect(0, 0, Constants.TILE_WIDTH, Constants.TILE_HEIGHT);
-                    selectedSpace = displaySpace;
-                }
-            } else if(selectedSpace != null && selectedSpace == displaySpace){ //we click our selected again to unselect
-                unhighlight(displaySpace);
+            DisplaySquare currentDisplaySpace = (DisplaySquare) event.getSource();
+            if(selectedTile != null){ // a space was clicked while a tile was selected.. put that tile on that space and take it out da tray
+                paintTileOnSpace(selectedTile, currentDisplaySpace);
+                unpaintTrayTile(selectedTile);
+                selectedTile = null; //nothing should be selected after a tile is placed
                 selectedSpace = null;
-            } else if(selectedSpace != null && selectedSpace != displaySpace){ //actually this shouldn't come up I don't think
-                if(selectedTile != null){
-                    //paint space with tile's info
-                } else{
-                    //unhighlight old
-                    //highlight new
-                    selectedSpace = displaySpace;
+            } else { // no tile selected we just have to worry about spaces
+                if(selectedSpace == null){ //we had no space selected before
+                    highlight(currentDisplaySpace);
+                    selectedSpace = currentDisplaySpace;
+                } else if(selectedSpace != null){ // we had a previously selected space, we have to update which is selected
+                    unhighlight(selectedSpace);
+                    highlight(currentDisplaySpace);
+                    selectedSpace = currentDisplaySpace;
                 }
             }
+
         }
     }
 
@@ -124,7 +113,10 @@ public class Controller {
     }
 
     private void highlight(Canvas canvas){
-
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.CYAN);
+        gc.setLineWidth(3);
+        gc.strokeRect(0,0,Constants.TILE_WIDTH, Constants.TILE_HEIGHT);
     }
 
     private void unhighlight(Canvas canvas){
