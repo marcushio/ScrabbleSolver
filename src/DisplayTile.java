@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
  * @version: brief class description
  */
 public class DisplayTile extends Canvas {
-    int NUM_YSTART = 15, NUM_XSTART = 25;
+    public int NUM_YSTART = 15, NUM_XSTART = 25;
     private boolean isSelected;
     private Tile tile;
 

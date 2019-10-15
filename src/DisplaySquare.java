@@ -53,5 +53,13 @@ class DisplaySquare extends Canvas {
         return rowIndex;
     }
 
+    public void setTile(DisplayTile tile){
+        this.tile = tile;
+    }
+
+    public DisplayTile getTile() {
+        return tile;
+    }
+
     //public boolean isSelected(){ return isSelected; }
 }

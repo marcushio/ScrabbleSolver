@@ -11,7 +11,7 @@ public class Move {
     private int startRow;
     private int startCol;
     private boolean across;
-    int score;
+    int score; //i don't think I'm going to need this
     Player player;
     Anchor anchor;
 

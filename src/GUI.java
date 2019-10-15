@@ -34,12 +34,14 @@ public class GUI implements Observer {
         this.controller = controller;
         playArea = new HBox();
             boardArea = paintNewGrid(Constants.BOARD_DIMENSIONS, model.getBoard(), controller);
-            scoreboard = new VBox();
+            scoreboard = new VBox(5);
                 humanScore = new Text("Your Score: 0" );
                 botScore = new Text("Bot Score: 0");
-                Button moveButton = new Button();
+                Button moveButton = new Button("EXECUTE");
                 moveButton.setOnAction(controller.new MoveButtonHandler());
-                scoreboard.getChildren().addAll(humanScore, botScore);
+                Button resetButton = new Button("RESET");
+                resetButton.setOnAction(controller.new ResetButtonHandler());
+        scoreboard.getChildren().addAll(humanScore, botScore, moveButton, resetButton);
         playArea.getChildren().addAll(boardArea, scoreboard);
         drawPlayerTray(model);
         root.getChildren().addAll(playArea, new Text("\t\t\t\t\t\t\t\tPLAYERS TRAY"), playerTray);
