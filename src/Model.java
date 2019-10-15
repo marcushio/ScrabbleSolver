@@ -32,6 +32,11 @@ public class Model  extends Observable {
         notifyObservers();
     }
 
+    public void updateGUI(){
+        setChanged();
+        notifyObservers();
+    }
+
     public List<Tile> getHumanTray(){ return player.getTray(); }
 
     public Board getBoard(){ return board; }

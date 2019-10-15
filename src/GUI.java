@@ -99,7 +99,9 @@ public class GUI implements Observer {
         Model updatedModel = (Model) model;
         drawPlayerTray(updatedModel);
         boardArea = paintNewGrid(Constants.BOARD_DIMENSIONS, updatedModel.getBoard(), controller);
-        humanScore = new Text(updatedModel.getPlayerScore() + " ");
-        botScore = new Text(updatedModel.getBotScore() + " ");
+        humanScore.setText("Your score: " + updatedModel.getPlayerScore()); //= new Text(updatedModel.getPlayerScore() + " ");
+        botScore.setText("AI score: " + updatedModel.getBotScore()); // = new Text(updatedModel.getBotScore() + " ");
+        playArea.getChildren().clear();
+        playArea.getChildren().addAll(boardArea, scoreboard); 
     }
 }
