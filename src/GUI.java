@@ -63,7 +63,7 @@ public class GUI implements Observer {
         for(int i = 0; i < size; i++){
             for(int j= 0; j < size; j++) {
                 DisplaySquare tempCanvas = new DisplaySquare(board.getSpaceAt(i,j), controller);
-                tempCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new TileHandler() );
+                tempCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new SpaceHandler() );
                 grid.getChildren().add(tempCanvas);
             }
         }
@@ -78,12 +78,6 @@ public class GUI implements Observer {
         playerTray.getChildren().add(new Text("   \t\t                "));
         for (Tile tile : model.getHumanTray() ) {
             DisplayTile newDisplayTile = new  DisplayTile(tile, controller);
-            if(tile.isSelected()){
-                GraphicsContext gc = newDisplayTile.getGraphicsContext2D();
-                gc.setFill(Color.BLUE);
-                gc.setStroke(Color.BLUE);
-                gc.strokeRect(2,2,Constants.TILE_WIDTH,Constants.TILE_HEIGHT);
-            }
             playerTray.getChildren().add(newDisplayTile);
         }
         if(model.getHumanTray().isEmpty()){
