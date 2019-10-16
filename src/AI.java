@@ -23,8 +23,8 @@ public class AI{
     }
     public AI(Trie trie, BoardSpace[][] board, TilePool sock, Player bot){
         tray = new ArrayList<Tile>();
-        refillTray(sock);
         this.bot = bot;
+        refillTray(sock);
         this.trie = trie;
         this.boardSpaces = board;
         this.tilePool = sock;
@@ -44,9 +44,11 @@ public class AI{
     }
 
     public void refillTray(TilePool sock){
-        while (tray.size() < Constants.TRAY_SIZE){
-            tray.add(sock.takeOutTile());
+        List<Tile> playertray = bot.getTray();
+        while (playertray.size() < Constants.TRAY_SIZE){
+           playertray.add(sock.takeOutTile());
         }
+        this.tray = (ArrayList<Tile>)playertray;
     }
 
     public Move makeSubsequentMove(){
@@ -123,7 +125,7 @@ public class AI{
                                 move = new Move(tilesInWord, (anchor.row - getAnchorPosition(anchor,tilesInWord)), anchor.col,false, bot );
                             }
                             int currentWordScore = Scorer.score(move , boardSpaces);
-                            if (currentWord.length() >= 6){
+                            if (currentWord.length() > 6){
                                 currentWordScore += 50;
                             }
 
@@ -376,4 +378,5 @@ public class AI{
     public void setTray(ArrayList<Tile> newTray){ this.tray = newTray; }
     public ArrayList<Tile> getTray(){ return tray; }
     public int getScore(){ return bot.getScore(); }
+    public void updateScore(int score){ bot.updateScore(score); }
 }

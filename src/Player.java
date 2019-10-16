@@ -23,6 +23,7 @@ public class Player {
     public Player(TilePool tilePool){
         fillTray(tilePool);
     }
+
     /**
      *
      * @param sock

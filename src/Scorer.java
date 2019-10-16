@@ -42,11 +42,7 @@ public class Scorer {
             if(move.isAcross()){ col++; }
             else{ row++; }
         }
-        /*
-        for(Tile tile: move.getTiles()) System.out.print(tile.getLetter());
-        System.out.println(" word score : " + wordScore*multiplyBy);
 
-         */
         return wordScore * multiplyBy;
     }
 }

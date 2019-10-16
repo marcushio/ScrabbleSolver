@@ -50,6 +50,8 @@ public class Model  extends Observable {
     public int getBotScore(){ return ai.getScore(); }
 
     public void executeMove(Move move){ // should rename to executePlayer move
+        int moveScore = Scorer.score(move, board.getBoard());
+        player.updateScore(moveScore);
         int row = move.getStartRow();
         int col = move.getStartCol();
 
@@ -65,6 +67,8 @@ public class Model  extends Observable {
         player.fillTray(tilePool);
         ai.setBoard(board.getBoard());
         Move botsMove = ai.makeSubsequentMove();
+
+        ai.updateScore(Scorer.score(botsMove, board.getBoard())); //score on the board before it gets the move enacted on it.
         botsMove.execute(board.getBoard());
         ai.refillTray(tilePool);
         setChanged();
