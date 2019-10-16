@@ -122,7 +122,7 @@ public class Controller {
 
             if(dictionary.contains(newMove.getWord())){
                 model.executeMove(newMove);
-            }
+            } else model.updateGUI();
 
             moveSquares.clear();
         }
@@ -138,11 +138,11 @@ public class Controller {
             int startRow = moveSquares.get(0).getRowIndex();
             int startCol = moveSquares.get(0).getColIndex();
             Move newMove = new Move(moveTiles, startRow, startCol, true, human );
-            System.out.println("oh jeez we're trying a move...");
+           // System.out.println("oh jeez we're trying a move...");
             //newMove.execute(model.getBoard().getBoard()); //lol how many times did I do this? first gets Board second gets Boardspaces[][];
             if(dictionary.contains(newMove.getWord())){
                 model.executeMove(newMove);
-            }
+            } else model.updateGUI();
             moveSquares.clear();
         }
     }
@@ -151,7 +151,6 @@ public class Controller {
         @Override
         public void handle(MouseEvent event){
             //i could store tempboard tiles then return them to tray here...
-
             model.updateGUI();
         }
     }

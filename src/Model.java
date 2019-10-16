@@ -41,6 +41,7 @@ public class Model  extends Observable {
     public boolean tilePoolIsEmpty(){
         return tilePool.isEmpty();
     }
+
     public void setEndPlayerTray(){
         ArrayList<Tile> endTray = makeEndTray();
         player.setTray(endTray);
@@ -86,6 +87,7 @@ public class Model  extends Observable {
         notifyObservers();
         //return boardArray;
     }
+
 private ArrayList<Tile> makeEndTray(){
       ArrayList<Tile> endTray  = new ArrayList<Tile>();
       endTray.add(new Tile("g", 0));

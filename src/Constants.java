@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,11 +52,13 @@ public class Constants {
     public static void setDictionaryFilename(String filename){ dictionaryFilename = filename; }
 
     /**
-     *
+     *InputStream in = getClass().getResourceAsStream("/file.txt");
+     *      * scanner(InputStream)
      */
     public static void readStandardBoard(){
         ArrayList<Solver.BoardConfig> boardConfigs = new ArrayList<Solver.BoardConfig>();
-        try(Scanner scanner = new Scanner(new File("res" + File.separator + "standardBoard.txt"))){
+        //try(Scanner scanner = new Scanner(new File("res" + File.separator + "standardBoard.txt"))){
+        try(Scanner scanner = new Scanner(getClass().getClassLoader().getResourceAsStream("/standardBoard.txt"))){
             while(scanner.hasNext()) {
                 String token = null; // i can probably integrate this instead of explicitly stating this var
                 Constants.setBoardDimensions(15);
@@ -81,7 +80,8 @@ public class Constants {
      */
     public static void readTileInfo(){
         String fileLine = "";
-        try (BufferedReader fileReader = new BufferedReader(new FileReader("res"+ File.separator+Constants.TILE_CONFIG_FILE))) {
+        //try (BufferedReader fileReader = new BufferedReader(new FileReader("res"+ File.separator+Constants.TILE_CONFIG_FILE))) {
+        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(Constants.TILE_CONFIG_FILE)))){
             while ((fileLine = fileReader.readLine()) != null) {
                 //parse line into letter, points, and frequency
                 String[] arr = fileLine.split(" ");
