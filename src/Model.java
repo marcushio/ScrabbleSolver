@@ -11,14 +11,15 @@ import java.util.*;
  */
 public class Model  extends Observable {
     private Board board;
-    private Player player, bot;
+    private Player player;
+    private AI ai;
     public TilePool tilePool;
 
-    public Model(){
+    public Model(Trie trie){
         board = new Board(); //make a standard size board
         tilePool = new TilePool();
         player = new Player(tilePool);
-        bot = new Player();
+        ai = new AI(trie, board.getBoard(), tilePool, new Player(tilePool));
     }
 
     public void selectTileInTray(Tile tile){
@@ -46,9 +47,9 @@ public class Model  extends Observable {
     }
 
     public int getPlayerScore(){ return player.getScore(); }
-    public int getBotScore(){ return bot.getScore(); }
+    public int getBotScore(){ return ai.getScore(); }
 
-    public void executeMove(Move move){
+    public void executeMove(Move move){ // should rename to executePlayer move
         int row = move.getStartRow();
         int col = move.getStartCol();
 
@@ -61,32 +62,14 @@ public class Model  extends Observable {
             }
             player.removeTrayTile(tile);
         }
+        player.fillTray(tilePool);
+        ai.setBoard(board.getBoard());
+        Move botsMove = ai.makeSubsequentMove();
+        botsMove.execute(board.getBoard());
+        ai.refillTray(tilePool);
         setChanged();
         notifyObservers();
         //return boardArray;
     }
 
-
-    /** pretty sure this is not model's job, that belongs to constants, prep this for deletion
-     * fills the collection of tiles that can be drawn by reading from a file that contains all inforamation about
-     * the number of each tiles, and the point specifications of each.
-
-     private void fillTilePool(){
-     String fileLine = "";
-     try (BufferedReader fileReader = new BufferedReader(new FileReader("res"+File.separator+Constants.TILE_CONFIG_FILE))) {
-     while ((fileLine = fileReader.readLine()) != null) {
-     //parse line into letter, points, and frequency
-     String[] arr = fileLine.split(" ");
-     String letter = arr[0];
-     int pointValue = Integer.parseInt(arr[1]);
-     int frequency = Integer.parseInt(arr[2]);
-     for(int i= 1; i <= frequency; i++) {
-     tilePool.add( new Tile(letter, pointValue) );
-     }
-     }
-     } catch (IOException ex) {
-     ex.printStackTrace();
-     }
-     }
-     */
 }

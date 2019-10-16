@@ -51,9 +51,9 @@ public class Controller {
                     paintTileOnSpace(selectedTile, currentDisplaySpace);
                     unpaintTrayTile(selectedTile);
                     currentDisplaySpace.setTile(selectedTile);
-                    moveSquares.add(currentDisplaySpace);
+                    //moveSquares.add(currentDisplaySpace);
 
-                    System.out.println("square with " + currentDisplaySpace.getTile().getTile().getLetter() + " added at spot 1");
+                    //System.out.println("square with " + currentDisplaySpace.getTile().getTile().getLetter() + " added at spot 1");
 
                     selectedTile = null; //nothing should be selected after a tile is placed
                     selectedSpace = null;
@@ -87,6 +87,7 @@ public class Controller {
                     unpaintTrayTile(currentDisplayTile);//don't have tile in tray
                     selectedSpace.setTile(currentDisplayTile);
                     moveSquares.add(selectedSpace);
+                    System.out.println("added " + selectedSpace.getTile().getTile().getLetter() );
                     selectedSpace = null;
                     selectedTile = null; //nothing should be selected after placing tile
                 } else { //no space selected at the same time as this tile
@@ -119,6 +120,7 @@ public class Controller {
             System.out.println("oh jeez we're trying a move...");
             //newMove.execute(model.getBoard().getBoard()); //lol how many times did I do this? first gets Board second gets Boardspaces[][];
             model.executeMove(newMove);
+            moveSquares.clear();
         }
     }
 
@@ -135,12 +137,15 @@ public class Controller {
             System.out.println("oh jeez we're trying a move...");
             //newMove.execute(model.getBoard().getBoard()); //lol how many times did I do this? first gets Board second gets Boardspaces[][];
             model.executeMove(newMove);
+            moveSquares.clear();
         }
     }
 
     public class ResetButtonHandler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent event){
+            //i could store tempboard tiles then return them to tray here...
+
             model.updateGUI();
         }
     }

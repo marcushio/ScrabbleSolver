@@ -6,6 +6,7 @@ import java.util.List;
  */
 public class AI{
     private Trie trie;
+    private TilePool tilePool;
     private Player bot;
     private int maxScore ;
     private ArrayList<Tile> bestWord;
@@ -20,6 +21,15 @@ public class AI{
         this.bot = new Player();
         this.trie = trie;
     }
+    public AI(Trie trie, BoardSpace[][] board, TilePool sock, Player bot){
+        tray = new ArrayList<Tile>();
+        refillTray(sock);
+        this.bot = bot;
+        this.trie = trie;
+        this.boardSpaces = board;
+        this.tilePool = sock;
+        this.bot = bot;
+    }
 
     public Move makeFirstMove(){
         bestWord = new ArrayList<>();
@@ -29,13 +39,13 @@ public class AI{
         Move move =
                 new Move(bestWord , Constants.BOARD_DIMENSIONS/2 ,
                         Constants.BOARD_DIMENSIONS/2 - (bestWord.size() / 2) , true , maxScore , bot);
-        refillTray();
+        //refillTray();
         return move;
     }
 
-    public void refillTray(){
+    public void refillTray(TilePool sock){
         while (tray.size() < Constants.TRAY_SIZE){
-
+            tray.add(sock.takeOutTile());
         }
     }
 
@@ -365,4 +375,5 @@ public class AI{
 
     public void setTray(ArrayList<Tile> newTray){ this.tray = newTray; }
     public ArrayList<Tile> getTray(){ return tray; }
+    public int getScore(){ return bot.getScore(); }
 }

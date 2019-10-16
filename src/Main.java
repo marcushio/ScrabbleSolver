@@ -37,7 +37,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
         readDictionary(Constants.dictionaryFilename);
-        model = new Model();
+        model = new Model(trie);
         controller = new Controller(dict, trie, model);
         gui = new GUI(primaryStage, model, controller);
         model.addObserver(gui);
