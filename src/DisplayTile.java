@@ -5,7 +5,8 @@ import javafx.scene.paint.Color;
 
 /**
  * @author: Marcus Trujillo
- * @version: brief class description
+ * @version:
+ * brief class description
  */
 public class DisplayTile extends Canvas {
     public int NUM_YSTART = 15, NUM_XSTART = 25;
@@ -25,7 +26,7 @@ public class DisplayTile extends Canvas {
         } else { gc.strokeRect(0,0,Constants.TILE_WIDTH,Constants.TILE_HEIGHT ); }
         gc.setLineWidth(1);
         gc.strokeText(tile.getLetter(), NUM_XSTART, NUM_YSTART);
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new TileHandler());
+        this.setOnMouseClicked(controller.new TileHandler());
     }
 
     public boolean isSelected(){ return isSelected; }

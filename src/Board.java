@@ -50,6 +50,4 @@ public class Board{
     }
 
     public BoardSpace[][] getBoard(){ return boardSpaces;}
-
-    public BoardSpace[][] getBoardSpaces(){ return boardSpaces; }
 }

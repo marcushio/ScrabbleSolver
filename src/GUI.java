@@ -16,7 +16,8 @@ import java.util.Scanner;
 
 /**
  * @author: Marcus Trujillo
- * @version: brief class description
+ * @version:
+ * brief class description
  */
 public class GUI implements Observer {
     private Controller controller;
@@ -37,11 +38,13 @@ public class GUI implements Observer {
             scoreboard = new VBox(5);
                 humanScore = new Text("Your Score: 0" );
                 botScore = new Text("Bot Score: 0");
-                Button moveButton = new Button("EXECUTE");
-                moveButton.setOnAction(controller.new MoveButtonHandler());
+                Button moveAcrossButton = new Button("EXECUTE ACROSS");
+                moveAcrossButton.setOnMouseClicked(controller.new AcrossButtonHandler());
+                Button moveDownButton = new Button("EXECUTE DOWN");
+                moveDownButton.setOnMouseClicked(controller.new DownButtonHandler());
                 Button resetButton = new Button("RESET");
-                resetButton.setOnAction(controller.new ResetButtonHandler());
-        scoreboard.getChildren().addAll(humanScore, botScore, moveButton, resetButton);
+                resetButton.setOnMouseClicked(controller.new ResetButtonHandler());
+        scoreboard.getChildren().addAll(humanScore, botScore, moveAcrossButton, moveDownButton, resetButton);
         playArea.getChildren().addAll(boardArea, scoreboard);
         drawPlayerTray(model);
         root.getChildren().addAll(playArea, new Text("\t\t\t\t\t\t\t\tPLAYERS TRAY"), playerTray);
@@ -64,7 +67,7 @@ public class GUI implements Observer {
 
         for(int i = 0; i < size; i++){
             for(int j= 0; j < size; j++) {
-                DisplaySquare tempCanvas = new DisplaySquare(board.getSpaceAt(i,j), controller);
+                DisplaySquare tempCanvas = new DisplaySquare(board.getSpaceAt(i,j), controller, i, j);
                 tempCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new SpaceHandler() );
                 grid.getChildren().add(tempCanvas);
             }
@@ -102,6 +105,6 @@ public class GUI implements Observer {
         humanScore.setText("Your score: " + updatedModel.getPlayerScore()); //= new Text(updatedModel.getPlayerScore() + " ");
         botScore.setText("AI score: " + updatedModel.getBotScore()); // = new Text(updatedModel.getBotScore() + " ");
         playArea.getChildren().clear();
-        playArea.getChildren().addAll(boardArea, scoreboard); 
+        playArea.getChildren().addAll(boardArea, scoreboard);
     }
 }

@@ -48,6 +48,24 @@ public class Model  extends Observable {
     public int getPlayerScore(){ return player.getScore(); }
     public int getBotScore(){ return bot.getScore(); }
 
+    public void executeMove(Move move){
+        int row = move.getStartRow();
+        int col = move.getStartCol();
+
+        for (Tile tile: move.getTiles()){
+            board.getBoard()[row][col].addTile(tile);
+            if (move.isAcross()){
+                col++;
+            } else {
+                row++;
+            }
+            player.removeTrayTile(tile);
+        }
+        setChanged();
+        notifyObservers();
+        //return boardArray;
+    }
+
 
     /** pretty sure this is not model's job, that belongs to constants, prep this for deletion
      * fills the collection of tiles that can be drawn by reading from a file that contains all inforamation about

@@ -14,12 +14,14 @@ class DisplaySquare extends Canvas {
     private int rowIndex, colIndex;
     private DisplayTile tile;
 
-    public DisplaySquare(BoardSpace space, Controller controller) {
+    public DisplaySquare(BoardSpace space, Controller controller, int row, int col) {
         setWidth(Constants.TILE_WIDTH); setHeight(Constants.TILE_HEIGHT);
+        this.rowIndex = row;
+        this.colIndex = col;
         if(space.isEmpty()) this.tile = null;
         else this.tile = new DisplayTile(space.getTile(), controller);
-        this.rowIndex = space.getRowIndex();
-        this.colIndex = space.getColIndex();
+      //  this.rowIndex = space.getRowIndex(); I think i forgot to set up where these spaces actually recieve
+      //  this.colIndex = space.getColIndex(); their index
 
         GraphicsContext gc = this.getGraphicsContext2D();
         gc.setLineWidth(3);
@@ -42,7 +44,8 @@ class DisplaySquare extends Canvas {
             gc.setLineWidth(1);
             gc.strokeText(space.getTile().getLetter(), NUM_XSTART, NUM_YSTART);
         }
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new SpaceHandler());
+        //this.setOnMouseClicked(MouseEvent.MOUSE_CLICKED, controller.new SpaceHandler());
+        this.setOnMouseClicked(controller.new SpaceHandler());
     }
 
     public int getColIndex() {
