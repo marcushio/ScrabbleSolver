@@ -43,6 +43,7 @@ class DisplaySquare extends Canvas {
             gc.strokeRect(0,0,Constants.TILE_WIDTH,Constants.TILE_HEIGHT);
             gc.setLineWidth(1);
             gc.strokeText(space.getTile().getLetter(), NUM_XSTART, NUM_YSTART);
+            gc.strokeText(space.getTile().getPointValue() + "", Constants.TILE_WIDTH -10 , Constants.TILE_HEIGHT -10 );
         }
         //this.setOnMouseClicked(MouseEvent.MOUSE_CLICKED, controller.new SpaceHandler());
         this.setOnMouseClicked(controller.new SpaceHandler());

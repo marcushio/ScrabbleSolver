@@ -57,5 +57,7 @@ public class Player {
 
     public List<Tile> getTray(){ return tray; }
 
-
+    public void setTray(List<Tile> tray) {
+        this.tray = tray;
+    }
 }

@@ -69,8 +69,8 @@ public class Controller {
                 }
                 if (currentDisplaySpace.getTile() != null) {
                     moveSquares.add(currentDisplaySpace);
-                    System.out.println(event.toString());
-                    System.out.println("square with " + currentDisplaySpace.getTile().getTile().getLetter() + " added at spot 2");
+                    //System.out.println(event.toString());
+                    //System.out.println("square with " + currentDisplaySpace.getTile().getTile().getLetter() + " added at spot 2");
                 }
             }
             event.consume();
@@ -87,7 +87,7 @@ public class Controller {
                     unpaintTrayTile(currentDisplayTile);//don't have tile in tray
                     selectedSpace.setTile(currentDisplayTile);
                     moveSquares.add(selectedSpace);
-                    System.out.println("added " + selectedSpace.getTile().getTile().getLetter() );
+                   // System.out.println("added " + selectedSpace.getTile().getTile().getLetter() );
                     selectedSpace = null;
                     selectedTile = null; //nothing should be selected after placing tile
                 } else { //no space selected at the same time as this tile
@@ -117,9 +117,13 @@ public class Controller {
             int startRow = moveSquares.get(0).getRowIndex();
             int startCol = moveSquares.get(0).getColIndex();
             Move newMove = new Move(moveTiles, startRow, startCol, false, human );
-            System.out.println("oh jeez we're trying a move...");
+            //System.out.println("oh jeez we're trying a move...");
             //newMove.execute(model.getBoard().getBoard()); //lol how many times did I do this? first gets Board second gets Boardspaces[][];
-            model.executeMove(newMove);
+
+            if(dictionary.contains(newMove.getWord())){
+                model.executeMove(newMove);
+            }
+
             moveSquares.clear();
         }
     }
@@ -136,7 +140,9 @@ public class Controller {
             Move newMove = new Move(moveTiles, startRow, startCol, true, human );
             System.out.println("oh jeez we're trying a move...");
             //newMove.execute(model.getBoard().getBoard()); //lol how many times did I do this? first gets Board second gets Boardspaces[][];
-            model.executeMove(newMove);
+            if(dictionary.contains(newMove.getWord())){
+                model.executeMove(newMove);
+            }
             moveSquares.clear();
         }
     }
@@ -178,5 +184,11 @@ public class Controller {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(3);
         gc.strokeRect(0,0, Constants.TILE_WIDTH, Constants.TILE_HEIGHT);
+    }
+
+    private boolean gameOver(){
+        boolean gameOver = false;
+        if( model.tilePoolIsEmpty() ){}
+        return gameOver;
     }
 }

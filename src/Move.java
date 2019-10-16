@@ -11,7 +11,6 @@ public class Move {
     private int startRow;
     private int startCol;
     private boolean across;
-    public boolean bingo = false;
     int score; //i don't think I'm going to need this
     Player player;
     Anchor anchor;
@@ -106,5 +105,5 @@ public class Move {
     }
 
     public Player getPlayer(){return player; }
-    public void setBingo(){ this.bingo = true; }
+    // public void setBingo(){ this.bingo = true; }
 }

@@ -12,6 +12,10 @@ public class Tile {
         this.letter = letter;
         this.pointValue = pointValue;
     }
+    public Tile(BoardSpace boardSpace){
+        this.letter = boardSpace.getTile().getLetter();
+        this.pointValue = boardSpace.getTile().getPointValue();
+    }
 
     /**
      *

@@ -68,6 +68,9 @@ public class GUI implements Observer {
         for(int i = 0; i < size; i++){
             for(int j= 0; j < size; j++) {
                 DisplaySquare tempCanvas = new DisplaySquare(board.getSpaceAt(i,j), controller, i, j);
+                if(!board.getSpaceAt(i,j).isEmpty()) {
+                    tempCanvas.setTile(new DisplayTile(new Tile(board.getSpaceAt(i, j)), controller));
+                }
                 tempCanvas.addEventHandler(MouseEvent.MOUSE_CLICKED, controller.new SpaceHandler() );
                 grid.getChildren().add(tempCanvas);
             }

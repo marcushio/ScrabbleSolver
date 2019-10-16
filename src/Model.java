@@ -38,6 +38,16 @@ public class Model  extends Observable {
         notifyObservers();
     }
 
+    public boolean tilePoolIsEmpty(){
+        return tilePool.isEmpty();
+    }
+    public void setEndPlayerTray(){
+        ArrayList<Tile> endTray = makeEndTray();
+        player.setTray(endTray);
+        setChanged();
+        notifyObservers();
+    }
+
     public List<Tile> getHumanTray(){ return player.getTray(); }
 
     public Board getBoard(){ return board; }
@@ -47,6 +57,7 @@ public class Model  extends Observable {
     }
 
     public int getPlayerScore(){ return player.getScore(); }
+
     public int getBotScore(){ return ai.getScore(); }
 
     public void executeMove(Move move){ // should rename to executePlayer move
@@ -75,5 +86,17 @@ public class Model  extends Observable {
         notifyObservers();
         //return boardArray;
     }
-
+private ArrayList<Tile> makeEndTray(){
+      ArrayList<Tile> endTray  = new ArrayList<Tile>();
+      endTray.add(new Tile("g", 0));
+    endTray.add(new Tile("a", 0));
+    endTray.add(new Tile("m", 0));
+    endTray.add(new Tile("e", 0));
+    endTray.add(new Tile("*", 0));
+    endTray.add(new Tile("o", 0));
+    endTray.add(new Tile("v", 0));
+    endTray.add(new Tile("e", 0));
+    endTray.add(new Tile("r", 0));
+    return endTray;
+}
 }
