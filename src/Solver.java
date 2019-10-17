@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -61,6 +58,7 @@ public class Solver {
         trie = new Trie();
         String word = null;
         try (BufferedReader fileReader = new BufferedReader(new FileReader("res" + File.separator +  filename))) {
+        //try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(filename)))){
             while ((word = fileReader.readLine()) != null) {
                 dict.add(word); //I get the feeling I'm not going to the need the HashMap dict in solver
                 trie.addWord(word);
@@ -77,10 +75,10 @@ public class Solver {
      */
     private ArrayList<BoardConfig> readBoards(){
         ArrayList<BoardConfig> boardConfigs = new ArrayList<BoardConfig>();
-        try(Scanner scanner = new Scanner(System.in)){
+        System.out.println("Enter your board configuration");
+        Scanner scanner = new Scanner(System.in);
             while(scanner.hasNext()) {
                 String token = null; // i can probably integrate this instead of explicitly stating this var
-                System.out.println("Enter your board configuration");
                 int boardSize = Integer.parseInt(scanner.next());
                 Constants.setBoardDimensions(boardSize);
                 boardSpaces = new BoardSpace[boardSize][boardSize];
@@ -97,10 +95,6 @@ public class Solver {
                 //printBoard(boardSize);
                 //System.out.println("Tray: " + tray);
             }
-        } catch (NullPointerException ex){
-            System.out.println("Null pointer thrown in readboard at ");
-            ex.printStackTrace();
-        }
         return boardConfigs;
     }
 
