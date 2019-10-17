@@ -75,12 +75,13 @@ public class Solver {
      */
     private ArrayList<BoardConfig> readBoards(){
         ArrayList<BoardConfig> boardConfigs = new ArrayList<BoardConfig>();
-        System.out.println("Enter your board configuration");
+        System.out.println("Enter your board config");
         Scanner scanner = new Scanner(System.in);
             while(scanner.hasNext()) {
                 String token = null; // i can probably integrate this instead of explicitly stating this var
                 int boardSize = Integer.parseInt(scanner.next());
                 Constants.setBoardDimensions(boardSize);
+                //System.out.println("Enter a board");
                 boardSpaces = new BoardSpace[boardSize][boardSize];
                 for (int i = 0; i < boardSize; i++) {
                     for (int j = 0; j < boardSize; j++) {
@@ -88,6 +89,7 @@ public class Solver {
                         boardSpaces[i][j] = new BoardSpace(token.toLowerCase());
                     }
                 }
+                //System.out.println("Enter a tray");
                 stringTray = scanner.next();
                 //tray = makeTrayFromString(stringTray);
                 boardConfigs.add(new BoardConfig(boardSize, boardSpaces, makeTrayFromString(stringTray)));

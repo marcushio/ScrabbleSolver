@@ -105,7 +105,7 @@ public class AI{
     private void  findHighestScoringWord(ArrayList<Tile> inputTiles, ArrayList<Tile> tilesToBeUsed, String currentWord, int score, Anchor anchor){
         for (int tileNo = 0 ; tileNo < inputTiles.size() ; tileNo++){
             Tile currentTile = inputTiles.get(tileNo);
-            if (currentTile == null) break; //ok I gotta admit this was pretty dang sloppy I don't usually like using break statements
+            if (currentTile == null) break;
             if (isValidPrefix(currentWord + currentTile.letter)	){
                 ArrayList<Tile> remainingTiles = new ArrayList<Tile>( inputTiles);
                 ArrayList<Tile> tilesInWord = new ArrayList<Tile>(tilesToBeUsed);
@@ -129,7 +129,7 @@ public class AI{
                                 currentWordScore += 50;
                             }
 
-                            if (maxScore < currentWordScore && moveIsValid(move) ){ //the move.isValid is my hack to fix a bug... look to improve
+                            if (maxScore < currentWordScore && moveIsValid(move) ){
                                 maxScore =  currentWordScore;
                                 bestWord = tilesInWord;
                                 currentAnchor = anchor;
