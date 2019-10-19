@@ -11,12 +11,15 @@ import java.util.Scanner;
 public class Solver {
     private Trie trie;
     private BoardSpace[][] boardSpaces;
-    //private List<Tile> playableLetters;
     private Board board;
     private ArrayList<Tile> tray;
     private String stringTray;
     private HashSet<String> dict;
 
+    /**
+     * allows the solver to set up by reading in the dictionary with the given filename.
+     * @param filename
+     */
     public Solver(String filename){
         readDictionary(filename);
         tray = new ArrayList<Tile>();
@@ -25,6 +28,9 @@ public class Solver {
         this.trie = trie;
     }
 
+    /**
+     * Encapsulates the data for board configurations that are read in for the solver to solve.
+     */
     public class BoardConfig{ //use subclass to store all the board configurations that are read in
         int size;
         BoardSpace[][] board;
@@ -35,14 +41,23 @@ public class Solver {
             this.tray = tray;
         }
 
+        /**
+         * @return the size of the board in this configuration
+         */
         public int getSize() {
             return size;
         }
 
+        /**
+         * @return the tray of this configuration.
+         */
         public ArrayList<Tile> getTray() {
             return tray;
         }
 
+        /**
+         * @return The board array of this configuration
+         */
         public BoardSpace[][] getBoard() {
             return board;
         }

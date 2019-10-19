@@ -2,7 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @Author: Marcus Trujillo
+ * @version: 10/15/19
  *
+ * This is basically the computer player and all it's logic. We integrate this into the solver in order to complete
+ * the sub-project.
  */
 public class AI{
     private Trie trie;
@@ -17,10 +21,23 @@ public class AI{
     public AI(Player bot) {
         this.bot = bot;
     }
+
+    /**
+     * this is a minimal constructor used when we only need to establish a Trie
+     * @param trie
+     */
     public AI(Trie trie) {
         this.bot = new Player();
         this.trie = trie;
     }
+
+    /**
+     * our robust constructor when we need full funcionality.
+     * @param trie
+     * @param board
+     * @param sock
+     * @param bot
+     */
     public AI(Trie trie, BoardSpace[][] board, TilePool sock, Player bot){
         tray = new ArrayList<Tile>();
         this.bot = bot;
@@ -31,6 +48,11 @@ public class AI{
         this.bot = bot;
     }
 
+    /**
+     * The procedure for making the first move is a little different, so it gets its own method, but is very similar to making
+     * any subsequent move.
+     * @return move
+     */
     public Move makeFirstMove(){
         bestWord = new ArrayList<>();
         getStartingWord( tray , bestWord, "", 0); //maxScore get's updated in here.
@@ -43,6 +65,10 @@ public class AI{
         return move;
     }
 
+    /**
+     * After ai makes it's move it needs to refill it's tray for the next turn.
+     * @param sock
+     */
     public void refillTray(TilePool sock){
         List<Tile> playertray = bot.getTray();
         while (playertray.size() < Constants.TRAY_SIZE){
@@ -51,6 +77,10 @@ public class AI{
         this.tray = (ArrayList<Tile>)playertray;
     }
 
+    /**
+     * This is where the AI finds the best move to play. The readme has more details on the algorithm.
+     * @return best move found
+     */
     public Move makeSubsequentMove(){
         Move move = null;
         maxScore = 0;
@@ -80,6 +110,12 @@ public class AI{
         return move;
     }
 
+    /**
+     * Get's the position where the anchor sits in a word. if we're playing "bat" using 'a' as an anchor it'll be 1.
+     * @param anchor
+     * @param word
+     * @return the position
+     */
     private int getAnchorPosition(Anchor anchor, ArrayList<Tile> word){
         for (int c = 0 ; c < word.size() ; c++){
             if (word.get(c).letter == anchor.anchorTile.letter){
@@ -89,6 +125,12 @@ public class AI{
         return -1000; //return something ridiculous if not there
     }
 
+    /**
+     * a check to be sure our proposed solution even fits on the board
+     * @param anchor
+     * @param word
+     * @return
+     */
     private boolean fitsOnBoard(Anchor anchor, ArrayList<Tile> word){
         //check if word would cause spilling off the edge of the board
         int anchorPos = getAnchorPosition(anchor, word);
@@ -102,6 +144,14 @@ public class AI{
         }
     }
 
+    /**
+     * This is the biggest part. This is where we find the word we're going to use by basically traversing our Trie.
+     * @param inputTiles
+     * @param tilesToBeUsed
+     * @param currentWord
+     * @param score
+     * @param anchor
+     */
     private void  findHighestScoringWord(ArrayList<Tile> inputTiles, ArrayList<Tile> tilesToBeUsed, String currentWord, int score, Anchor anchor){
         for (int tileNo = 0 ; tileNo < inputTiles.size() ; tileNo++){
             Tile currentTile = inputTiles.get(tileNo);
@@ -141,6 +191,11 @@ public class AI{
         }
     }
 
+    /**
+     * A check to be sure our proposed move actually works and doesn't overlap with other words.
+     * @param move
+     * @return
+     */
     private boolean moveIsValid(Move move){
         BoardSpace[][] boardCopy = new BoardSpace[Constants.BOARD_DIMENSIONS][Constants.BOARD_DIMENSIONS];
         for(int i = 0; i < Constants.BOARD_DIMENSIONS; i++){
@@ -188,6 +243,11 @@ public class AI{
         return true;
     }
 
+    /**
+     * A utility function to check on the piece of the word we've made so far is actually part of a bigger word
+     * @param prefix
+     * @return
+     */
     private boolean isValidPrefix(String prefix){
         if (trie.searchPrefix(prefix)){
             return true;
@@ -196,6 +256,11 @@ public class AI{
         }
     }
 
+    /**
+     * utility function to see if a word is valid.
+     * @param word
+     * @return
+     */
     private boolean isValidWord(String word){
         if (trie.searchWord(word)){
             return true;
@@ -204,6 +269,13 @@ public class AI{
         }
     }
 
+    /**
+     * Again finding the starting word is different so it get's it's own method.
+     * @param inputTiles
+     * @param tilesToBeUsed
+     * @param currentWord
+     * @param score
+     */
     public void  getStartingWord(ArrayList<Tile> inputTiles, ArrayList<Tile> tilesToBeUsed, String currentWord, int score){
         for (int tileNo = 0 ; tileNo < inputTiles.size() ; tileNo++){
             Tile curTile = inputTiles.get(tileNo);
@@ -231,6 +303,10 @@ public class AI{
         }
     }
 
+    /**
+     * the first step of making a move. We search through the board finding anchors to play off.
+     * @return
+     */
     public ArrayList<Anchor> findAnchors(){
         ArrayList<Anchor> anchors = new ArrayList<Anchor>();
         //BoardSpace[][] boardSpaces =  Board.getInstance().getBoardSpaces(); this is now set from the outside because my solver is using the ai
@@ -366,17 +442,43 @@ public class AI{
         return anchors;
     }
 
+    /**
+     * Set to a different Trie if you need to change
+     * @param trie
+     */
     public void setTrie(Trie trie){
         this.trie = trie;
     }
 
+    /**
+     * set the board to whatever you need. Very necessary as a utility method for the solver because we check multiple
+     * boards.
+     * @param newBoard
+     */
     public void setBoard(BoardSpace[][] newBoard){
         boardSpaces = newBoard;
         maxScore = 0;
     }
 
+    /**
+     * also a utility for the solver since we solve with multiple trays.
+     * @param newTray
+     */
     public void setTray(ArrayList<Tile> newTray){ this.tray = newTray; }
+
+    /**
+     * @return the tray of the AI.
+     */
     public ArrayList<Tile> getTray(){ return tray; }
+
+    /**
+     * @return The score of the AI
+     */
     public int getScore(){ return bot.getScore(); }
+
+    /**
+     * Update the score of the ai
+     * @param score
+     */
     public void updateScore(int score){ bot.updateScore(score); }
 }
