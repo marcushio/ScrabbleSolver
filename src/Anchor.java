@@ -1,6 +1,7 @@
 /**
  * @author: Marcus Trujillo
- * @version: brief class description
+ * @version:
+ * Basically spots that can be played on board where we look to form words.
  */
 public class Anchor {
     int row;
