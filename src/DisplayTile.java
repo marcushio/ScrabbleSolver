@@ -33,6 +33,11 @@ public class DisplayTile extends Canvas {
 
     public Tile getTile(){ return tile; }
 
+    public boolean isEmpty(){
+        if(tile != null) return false;
+        else return true;
+    }
+
     public void select(){
         isSelected = true;
         //tile.setSelected(true); I'm going a different route, let's see if it pans out

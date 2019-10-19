@@ -65,5 +65,10 @@ class DisplaySquare extends Canvas {
         return tile;
     }
 
+    public boolean isEmpty(){
+        if(tile != null) return false;
+        else return true;
+    }
+
     //public boolean isSelected(){ return isSelected; }
 }

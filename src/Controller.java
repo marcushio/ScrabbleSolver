@@ -50,7 +50,8 @@ public class Controller {
                 if (selectedTile != null) { // a space was clicked while a tile was selected.. put that tile on that space and take it out da tray
                     paintTileOnSpace(selectedTile, currentDisplaySpace);
                     unpaintTrayTile(selectedTile);
-                    currentDisplaySpace.setTile(selectedTile);
+                    if(currentDisplaySpace.isEmpty()){ currentDisplaySpace.setTile(selectedTile); } // place the tile only if it's empty
+
                     //moveSquares.add(currentDisplaySpace);
 
                     //System.out.println("square with " + currentDisplaySpace.getTile().getTile().getLetter() + " added at spot 1");
@@ -69,6 +70,9 @@ public class Controller {
                 }
                 if (currentDisplaySpace.getTile() != null) {
                     moveSquares.add(currentDisplaySpace);
+                    for(DisplaySquare square : moveSquares){
+                        Tile tile = square.getTile().getTile();
+                    }
                     //System.out.println(event.toString());
                     //System.out.println("square with " + currentDisplaySpace.getTile().getTile().getLetter() + " added at spot 2");
                 }
@@ -151,6 +155,7 @@ public class Controller {
         @Override
         public void handle(MouseEvent event){
             //i could store tempboard tiles then return them to tray here...
+            moveSquares.clear();
             model.updateGUI();
         }
     }
